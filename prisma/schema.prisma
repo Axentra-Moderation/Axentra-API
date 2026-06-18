@@ -1,0 +1,207 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Guild {
+  id           String            @id // Discord guild ID
+  settings     Json              @default("{}")
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  bans         Ban[]
+  members      GuildMember[]
+  permissions  GuildPermission[]
+  kicks        Kick[]
+  modLogs      ModLog[]
+  mutes        Mute[]
+  pardons      Pardon[]
+  purges       Purge[]
+  warnings     Warning[]
+}
+
+model GuildMember {
+  id        String    @id @default(uuid())
+  guildId   String
+  userId    String
+  joinedAt  DateTime?
+  nickname  String?
+  roleIds   String[]  @default([])
+  isBot     Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bans      Ban[]
+  guild     Guild     @relation(fields: [guildId], references: [id])
+  kicks     Kick[]
+  modLogs   ModLog[]
+  mutes     Mute[]
+  pardons   Pardon[]
+  warnings  Warning[]
+
+  @@unique([guildId, userId])
+  @@index([guildId])
+}
+
+model User {
+  id                  String   @id
+  username            String
+  globalName          String?
+  avatar              String?
+  discordAccessToken  String
+  discordRefreshToken String
+  discordTokenExpiry  DateTime
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model GuildPermission {
+  id      String          @id @default(uuid())
+  guildId String
+  roleId  String
+  level   PermissionLevel
+  guild   Guild           @relation(fields: [guildId], references: [id])
+
+  @@unique([guildId, roleId])
+  @@index([guildId])
+}
+
+model ModLog {
+  id          String           @id @default(uuid())
+  guildId     String
+  targetId    String?
+  moderatorId String
+  action      ModerationAction
+  reason      String?
+  duration    Int?
+  expiresAt   DateTime?
+  createdAt   DateTime         @default(now())
+  memberId    String?
+  guild       Guild            @relation(fields: [guildId], references: [id])
+  member      GuildMember?     @relation(fields: [memberId], references: [id])
+
+  @@index([guildId])
+  @@index([targetId])
+  @@index([guildId, memberId])
+}
+
+model Warning {
+  id          String       @id @default(uuid())
+  guildId     String
+  userId      String
+  moderatorId String
+  reason      String
+  active      Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  expiresAt   DateTime?
+  memberId    String?
+  guild       Guild        @relation(fields: [guildId], references: [id])
+  member      GuildMember? @relation(fields: [memberId], references: [id])
+
+  @@index([guildId, userId])
+  @@index([guildId, memberId])
+}
+
+model Ban {
+  id          String       @id @default(uuid())
+  guildId     String
+  userId      String
+  moderatorId String
+  reason      String?
+  active      Boolean      @default(true)
+  duration    Int?
+  expiresAt   DateTime?
+  createdAt   DateTime     @default(now())
+  memberId    String?
+  guild       Guild        @relation(fields: [guildId], references: [id])
+  member      GuildMember? @relation(fields: [memberId], references: [id])
+
+  @@index([guildId, userId])
+  @@index([guildId, memberId])
+}
+
+model Mute {
+  id          String       @id @default(uuid())
+  guildId     String
+  userId      String
+  moderatorId String
+  reason      String?
+  active      Boolean      @default(true)
+  duration    Int?
+  expiresAt   DateTime?
+  createdAt   DateTime     @default(now())
+  memberId    String?
+  guild       Guild        @relation(fields: [guildId], references: [id])
+  member      GuildMember? @relation(fields: [memberId], references: [id])
+
+  @@index([guildId, userId])
+  @@index([guildId, memberId])
+}
+
+model Kick {
+  id          String       @id @default(uuid())
+  guildId     String
+  userId      String
+  moderatorId String
+  reason      String?
+  createdAt   DateTime     @default(now())
+  memberId    String?
+  guild       Guild        @relation(fields: [guildId], references: [id])
+  member      GuildMember? @relation(fields: [memberId], references: [id])
+
+  @@index([guildId, userId])
+  @@index([guildId, memberId])
+}
+
+model Purge {
+  id          String   @id @default(uuid())
+  guildId     String
+  moderatorId String
+  targetId    String?
+  amount      Int
+  reason      String?
+  createdAt   DateTime @default(now())
+  guild       Guild    @relation(fields: [guildId], references: [id])
+
+  @@index([guildId])
+}
+
+model Pardon {
+  id          String       @id @default(uuid())
+  guildId     String
+  targetId    String
+  moderatorId String
+  type        PardonType
+  reason      String?
+  createdAt   DateTime     @default(now())
+  memberId    String?
+  guild       Guild        @relation(fields: [guildId], references: [id])
+  member      GuildMember? @relation(fields: [memberId], references: [id])
+
+  @@index([guildId, targetId])
+  @@index([guildId, memberId])
+}
+
+enum PermissionLevel {
+  NONE
+  MOD
+  ADMIN
+}
+
+enum ModerationAction {
+  WARN
+  BAN
+  UNBAN
+  KICK
+  MUTE
+  UNMUTE
+  PURGE
+  PARDON
+}
+
+enum PardonType {
+  UNBAN
+  UNMUTE
+}
