@@ -23,6 +23,17 @@ model Guild {
   warnings     Warning[]
 }
 
+model ApiKey {
+  id          String    @id @default(uuid())
+  keyHash     String    @unique          // bcrypt/sha256 hash — never store plaintext
+  prefix      String                     // e.g. "mod_pk_abc123" — shown to user for identification
+  label       String?                    // human-readable name
+  createdAt   DateTime  @default(now())
+  lastUsedAt  DateTime?
+  expiresAt   DateTime?
+  revokedAt   DateTime?
+}
+
 model GuildMember {
   id        String    @id @default(uuid())
   guildId   String

@@ -8,7 +8,7 @@ import guildsRouter from "./routes/guilds.route";
 //import { logsRouter } from "./routes/logs";
 //import { warningsRouter } from "./routes/warnings";
 //import { permissionsRouter } from "./routes/permissions";
-//import { auth } from "./middleware/auth";
+import { auth } from "./middleware/auth";
 //import { errorHandler } from "./middleware/errorHandler";
 
 export function createApp() {
@@ -23,7 +23,7 @@ export function createApp() {
   app.use("/auth", authRouter);
 
   // Protected routes
-  //app.use(auth); // Resolve caller identity
+  app.use(auth); // Resolve caller identity
   app.use("/guilds", guildsRouter);
   //app.use("/guilds", moderationRouter);
   //app.use("/guilds", logsRouter);
@@ -31,6 +31,11 @@ export function createApp() {
   //app.use("/guilds", permissionsRouter);
 
   //app.use(errorHandler);
+
+  app.use((req, res, next) => {
+    console.log(`Incoming: ${req.method} ${req.path}`);
+    next();
+  });
 
   return app;
 }

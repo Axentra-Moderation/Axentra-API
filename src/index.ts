@@ -15,6 +15,11 @@ process.on("unhandledRejection", (err) => {
   process.exit(1);
 });
 
+const required = ["DATABASE_URL", "JWT_SECRET"];
+for (const key of required) {
+  if (!process.env[key]) throw new Error(`Missing required env var: ${key}`);
+}
+
 createApp().listen(PORT, () => {
   logger.info(`API listening on port ${PORT}`);
 });

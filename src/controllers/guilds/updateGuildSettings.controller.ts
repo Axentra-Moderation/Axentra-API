@@ -11,20 +11,28 @@ export const updateGuildSettings = async (req: Request, res: Response) => {
   );
 
   const prisma = getPrisma();
-  const guild = await prisma.guild.upsert({
-    where: { id: guildId },
-    update: {
-      settings: settings,
-      updatedAt: new Date(Date.now()),
-    },
-    create: {
-      id: guildId,
-      settings: settings,
-      updatedAt: new Date(Date.now()),
-    },
-  });
+  const guild = prisma.guild;
+  try {
+    guild.upsert({
+      where: { id: guildId },
+      update: {
+        settings: settings,
+        updatedAt: new Date(Date.now()),
+      },
+      create: {
+        id: guildId,
+        settings: settings,
+        updatedAt: new Date(Date.now()),
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      guildId,
+      error: err,
+    });
+  }
 
-  res.status(500).json({
+  res.status(201).json({
     guildId,
     updates: settings,
   });

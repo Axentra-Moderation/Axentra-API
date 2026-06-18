@@ -5,6 +5,6 @@ import { getGuildSettings } from "../controllers/guilds/getGuildSettings.control
 const router = Router();
 
 router.get("/:guildId", getGuildSettings);
-router.patch("/:guildId", updateGuildSettings);
+router.post("/:guildId", updateGuildSettings);
 
 export default router;
