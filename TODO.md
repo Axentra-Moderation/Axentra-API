@@ -3,7 +3,7 @@
 This tracks what's actually been built vs. the original plan (`plan.md`), notable
 deviations made along the way, known bugs, and what's left.
 
-Last reviewed against commit `7afe2eb`.
+Last reviewed against commit `27cae86` + this session's fixes.
 
 ---
 
@@ -58,47 +58,34 @@ drift apart.
 
 ## Known bugs / inconsistencies to fix
 
-- [ ] **`lib/prisma.ts` still exists as a second, separate `PrismaClient`
-      instance**, used only by `src/repositories/apiKey.repo.ts`. Every other
-      controller uses the singleton from `src/utils/prisma.ts` via `getPrisma()`.
-      This means there are two separate connection pools / client instances
-      doing the same job. Migrate `apiKey.repo.ts` to use `getPrisma()` and
-      delete `lib/prisma.ts` entirely.
-- [ ] **`discordCallback` (auth callback controller) writes to fields that
-      don't exist on the `User` model**: `discordAccessToken`,
-      `discordRefreshToken`, `discordTokenExpiry`. The schema has no such
-      columns — this will throw at runtime the first time OAuth2 callback is
-      actually hit. Either add these fields to `User` in `schema.prisma` (and
-      migrate), or stop trying to persist Discord OAuth tokens if they're not
-      meant to be stored long-term.
-- [ ] **`unbanUser` doesn't write a `Log` row at all.** The ban path creates
-      a `Ban` row but the unban path only deletes the `Ban` row — there's no
-      audit trail for unbans currently. (A `Log.create({ action: "UNBAN", ... })`
-      call needs to be added and properly `await`-ed before the response is sent.)
-- [ ] **`banUser`'s duplicate-ban check uses `findMany` + `.length >= 1` and
-      returns `302`.** A `302 Found` is a redirect status code and is the wrong
-      semantic here — this should likely be `409 Conflict` (resource already
-      exists in that state). Also worth considering a unique constraint at the
-      DB level (`@@unique([guildId, userId])` scoped to active bans) so this
-      can't race under concurrent requests.
-- [ ] **`updateGuildSettings` doesn't await `guild.upsert(...)`.** The
-      Prisma call's promise is never awaited, so the handler can respond
-      `201` before the write has actually completed (or even before it's
-      guaranteed to run if the process exits/moves on). Also `logger` is
-      imported but the route never logs an error if `try` fails meaningfully
-      — the `catch` exists but the original problem (unawaited call) means
-      it likely never triggers from real DB errors.
-- [ ] **No FK pre-checks before writing `Ban`/`Log` rows.** `Ban.guildId`,
-      `Ban.userId`, `Ban.moderatorId` (and the equivalent `Log` fields) are all
-      FK-constrained to `Guild`/`User`. If a guild or user hasn't been synced
-      into the local DB yet (no gateway listener exists yet — see below), the
-      very first moderation action against a new guild/user will fail with a
-      `P2003` foreign key violation. Needs either an upsert-on-write strategy
-      in the controllers, or a sync job that keeps `Guild`/`User`/`GuildMember`
-      populated from Discord events as they happen.
-- [ ] **Unused imports**: `logger` is imported but unused in
-      `getGuildSettings.controller.ts`; `crypto` is imported but unused in
-      `apiKey.repo.ts` (hashing happens in `auth.ts` and `apiKey.ts` instead).
+- [x] `lib/prisma.ts` duplicate client removed — `apiKey.repo.ts` now uses
+      the shared `getPrisma()` singleton. `lib/` directory deleted.
+- [x] `discordCallback` no longer writes nonexistent `discordAccessToken` /
+      `discordRefreshToken` / `discordTokenExpiry` fields, and now correctly
+      sets the required `discriminator` field on `create`.
+- [x] `unbanUser` now writes a `Log` row (`action: "UNBAN"`).
+- [x] `banUser`'s duplicate-ban check now returns `409` instead of `302`.
+- [x] `updateGuildSettings`'s `guild.upsert(...)` call is now `await`-ed.
+- [x] Unused `logger` import removed from `getGuildSettings.controller.ts`.
+- [ ] **JWT shape mismatch — dashboard login currently can't pass auth.**
+      `signJwt` (used by the OAuth callback and refresh controllers) only signs
+      `{ id, username }`, but `auth.ts`'s `handleJwt` requires `payload.sub` and
+      `payload.guildPermissions`, rejecting anything else with
+      `401 Malformed JWT payload`. Every dashboard-issued token currently fails
+      the auth check it's meant to pass. Needs a decision: sign `sub` +
+      `guildPermissions` at issue time (requires resolving guild permissions
+      during OAuth callback), or change `handleJwt` to accept `{ id, username }`
+      and resolve permissions per-request from the DB. See `AUTH.md`.
+- [ ] **No FK pre-checks before writing `Ban`/`Log` rows in moderation
+      controllers.** The OAuth callback now upserts the calling dashboard user,
+      but ban/unban (typically bot-called) still assume `Guild`/`User` rows
+      already exist. First moderation action against a brand-new guild/user
+      will still throw `P2003` until a sync job exists (see below) or the
+      controllers upsert on write.
+- [ ] **Unused import**: `crypto` was imported but unused in `apiKey.repo.ts`
+      (hashing happens in `auth.ts` and `apiKey.ts` instead) — removed as part
+      of the `lib/prisma.ts` cleanup, flagging here for visibility in case it
+      reappears.
 
 ---
 
@@ -138,6 +125,10 @@ drift apart.
 
 ## Notes for next session
 
+- `AUTH.md` and `API.md` were added this session — `AUTH.md` documents the
+  caller/header conventions and flags the JWT shape mismatch above;
+  `API.md` documents the actually-implemented endpoints as a contract
+  reference, separate from `plan.md`'s original design.
 - `prisma/seed-mock-guild.ts` exists for local testing — seeds a fixed
   mock `Guild` + owner/target/moderator `User` rows so ban/unban can be
   tested without a live gateway sync. Safe to re-run (uses `upsert`).

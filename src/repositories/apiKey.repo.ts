@@ -1,6 +1,7 @@
 // src/repositories/apiKey.repo.ts
-import crypto from "crypto";
-import { prisma } from "../../lib/prisma";
+import { getPrisma } from "../utils/prisma";
+
+const prisma = getPrisma();
 
 export const apiKeyRepo = {
   create(data: {

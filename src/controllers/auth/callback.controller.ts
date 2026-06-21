@@ -40,20 +40,16 @@ export const discordCallback = async (req: Request, res: Response) => {
     where: { id: discordUser.id },
     update: {
       username: discordUser.username,
+      discriminator: discordUser.discriminator,
       globalName: discordUser.global_name ?? null,
       avatar: discordUser.avatar ?? null,
-      discordAccessToken: tokenData.access_token,
-      discordRefreshToken: tokenData.refresh_token,
-      discordTokenExpiry: new Date(Date.now() + tokenData.expires_in * 1000),
     },
     create: {
       id: discordUser.id,
       username: discordUser.username,
+      discriminator: discordUser.discriminator,
       globalName: discordUser.global_name ?? null,
       avatar: discordUser.avatar ?? null,
-      discordAccessToken: tokenData.access_token,
-      discordRefreshToken: tokenData.refresh_token,
-      discordTokenExpiry: new Date(Date.now() + tokenData.expires_in * 1000),
     },
   });
 
