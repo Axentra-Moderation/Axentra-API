@@ -21,7 +21,9 @@ export const discordCallback = async (req: Request, res: Response) => {
   });
 
   const tokenData = await tokenRes.json();
-  logger.debug(`Token data: ${JSON.stringify(tokenData)}`);
+  logger.debug(
+    `Token exchange succeeded, scope: ${tokenData.scope ?? "unknown"}`,
+  );
 
   if (tokenData.error) {
     res.status(401).json({ error: tokenData.error });
