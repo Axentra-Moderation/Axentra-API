@@ -13,7 +13,7 @@ export const updateGuildSettings = async (req: Request, res: Response) => {
   const prisma = getPrisma();
   const guild = prisma.guild;
   try {
-    guild.upsert({
+    await guild.upsert({
       where: { id: guildId },
       update: {
         settings: settings,

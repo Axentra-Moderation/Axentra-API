@@ -46,8 +46,18 @@ export const unbanUser = async (req: Request, res: Response) => {
       where: { id: ban.id },
     });
 
+    const log = await prisma.log.create({
+      data: {
+        action: "UNBAN",
+        reason: reason,
+        guildId: guildId,
+        targetId: userId,
+        moderatorId: moderatorId,
+      },
+    });
+
     return res.status(200).json({
-      ban: deleteBan,
+      log: log,
     });
   } catch (err) {
     return res.status(500).json({

@@ -16,7 +16,7 @@ export const banUser = async (req: Request, res: Response) => {
     });
 
     if (userBans.length >= 1) {
-      return res.status(302).json({
+      return res.status(409).json({
         error: "This user is already banned from that guild.",
         log: userBans,
       });

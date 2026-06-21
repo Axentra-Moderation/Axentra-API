@@ -176,15 +176,15 @@ mod-api/
 
 ### Moderation — `/guilds/:guildId/moderation`
 
-| Method | Path                                 | Caller | Description                          |
-| ------ | ------------------------------------ | ------ | ------------------------------------ |
-| `POST` | `/guilds/:guildId/moderation/ban`    | Both   | Ban a user                           |
-| `POST` | `/guilds/:guildId/moderation/unban`  | Both   | Unban a user                         |
-| `POST` | `/guilds/:guildId/moderation/kick`   | Both   | Kick a user                          |
-| `POST` | `/guilds/:guildId/moderation/mute`   | Both   | Mute a user (with optional duration) |
-| `POST` | `/guilds/:guildId/moderation/unmute` | Both   | Remove mute                          |
-| `POST` | `/guilds/:guildId/moderation/warn`   | Both   | Issue a warning                      |
-| `POST` | `/guilds/:guildId/moderation/purge`  | Both   | Bulk delete messages                 |
+| Method   | Path                                       | Caller | Description                          |
+| -------- | ------------------------------------------ | ------ | ------------------------------------ |
+| `POST`   | `/guilds/:guildId/moderation/ban/:userId`  | Both   | Ban a user                           |
+| `DELETE` | `/guilds/:guildId/moderation/ban/:userId`  | Both   | Unban a user                         |
+| `POST`   | `/guilds/:guildId/moderation/kick/:userId` | Both   | Kick a user                          |
+| `POST`   | `/guilds/:guildId/moderation/mute/Use`     | Both   | Mute a user (with optional duration) |
+| `POST`   | `/guilds/:guildId/moderation/unmute`       | Both   | Remove mute                          |
+| `POST`   | `/guilds/:guildId/moderation/warn`         | Both   | Issue a warning                      |
+| `POST`   | `/guilds/:guildId/moderation/purge`        | Both   | Bulk delete messages                 |
 
 ### Warnings — `/guilds/:guildId/warnings`
 
