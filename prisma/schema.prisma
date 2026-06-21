@@ -1,218 +1,423 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model Guild {
-  id           String            @id // Discord guild ID
-  settings     Json              @default("{}")
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
-  bans         Ban[]
-  members      GuildMember[]
-  permissions  GuildPermission[]
-  kicks        Kick[]
-  modLogs      ModLog[]
-  mutes        Mute[]
-  pardons      Pardon[]
-  purges       Purge[]
-  warnings     Warning[]
-}
-
+// =========================================
+// API Key (existing — linked to User for ownership)
+// =========================================
 model ApiKey {
-  id          String    @id @default(uuid())
-  keyHash     String    @unique          // bcrypt/sha256 hash — never store plaintext
-  prefix      String                     // e.g. "mod_pk_abc123" — shown to user for identification
-  label       String?                    // human-readable name
-  createdAt   DateTime  @default(now())
-  lastUsedAt  DateTime?
-  expiresAt   DateTime?
-  revokedAt   DateTime?
+  id         String    @id @default(uuid())
+  keyHash    String    @unique
+  prefix     String
+  label      String?
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+  expiresAt  DateTime?
+  revokedAt  DateTime?
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
 }
 
-model GuildMember {
-  id        String    @id @default(uuid())
-  guildId   String
-  userId    String
-  joinedAt  DateTime?
-  nickname  String?
-  roleIds   String[]  @default([])
-  isBot     Boolean   @default(false)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  bans      Ban[]
-  guild     Guild     @relation(fields: [guildId], references: [id])
-  kicks     Kick[]
-  modLogs   ModLog[]
-  mutes     Mute[]
-  pardons   Pardon[]
-  warnings  Warning[]
-
-  @@unique([guildId, userId])
-  @@index([guildId])
-}
-
+// =========================================
+// User Object — https://docs.discord.com/developers/resources/user#user-object
+// =========================================
 model User {
-  id                  String   @id
-  username            String
-  globalName          String?
-  avatar              String?
-  discordAccessToken  String
-  discordRefreshToken String
-  discordTokenExpiry  DateTime
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  id            String   @id
+  username      String
+  discriminator String
+  globalName    String?  @map("global_name")
+  avatar        String?
+  bot           Boolean? @default(false)
+  system        Boolean? @default(false)
+  mfaEnabled    Boolean? @map("mfa_enabled")
+  banner        String?
+  accentColor   Int?     @map("accent_color")
+  locale        String?
+  verified      Boolean?
+  email         String?
+  flags         Int?
+  premiumType   Int?     @map("premium_type")
+  publicFlags   Int?     @map("public_flags")
+
+  avatarDecorationData AvatarDecorationData?
+  collectibles         Collectibles?
+  primaryGuild         UserPrimaryGuild?
+
+  apiKeys          ApiKey[]
+  guildMemberships GuildMember[]
+  ownedGuilds      Guild[]       @relation("GuildOwner")
+  rolesCreated     Role[]        @relation("RoleBot")
+  emojisCreated    Emoji[]       @relation("EmojiCreator")
+  stickersCreated  Sticker[]     @relation("StickerCreator")
+  bansReceived     Ban[]         @relation("BanTarget")
+  bansIssued       Ban[]         @relation("BanModerator")
+  logsReceived     Log[]         @relation("LogTarget")
+  logsIssued       Log[]         @relation("LogModerator")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
 }
 
-model GuildPermission {
-  id      String          @id @default(uuid())
-  guildId String
-  roleId  String
-  level   PermissionLevel
-  guild   Guild           @relation(fields: [guildId], references: [id])
+model AvatarDecorationData {
+  id     String @id @default(uuid())
+  asset  String
+  skuId  String @map("sku_id")
+  userId String @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
 
-  @@unique([guildId, roleId])
+  @@map("avatar_decoration_data")
+}
+
+model Collectibles {
+  id        String     @id @default(uuid())
+  userId    String     @unique @map("user_id")
+  user      User       @relation(fields: [userId], references: [id])
+  nameplate Nameplate?
+
+  @@map("collectibles")
+}
+
+model Nameplate {
+  id             String       @id @default(uuid())
+  skuId          String       @map("sku_id")
+  asset          String
+  label          String
+  palette        String
+  collectiblesId String       @unique @map("collectibles_id")
+  collectibles   Collectibles @relation(fields: [collectiblesId], references: [id])
+
+  @@map("nameplates")
+}
+
+model UserPrimaryGuild {
+  id              String   @id @default(uuid())
+  identityGuildId String?  @map("identity_guild_id")
+  identityEnabled Boolean? @map("identity_enabled")
+  tag             String?
+  badge           String?
+  userId          String   @unique @map("user_id")
+  user            User     @relation(fields: [userId], references: [id])
+
+  @@map("user_primary_guilds")
+}
+
+// =========================================
+// Guild Object — https://docs.discord.com/developers/resources/guild#guild-object
+// =========================================
+model Guild {
+  id                          String   @id
+  name                        String
+  icon                        String?
+  iconHash                    String?  @map("icon_hash")
+  splash                      String?
+  discoverySplash             String?  @map("discovery_splash")
+  ownerId                     String   @map("owner_id")
+  owner                       User     @relation("GuildOwner", fields: [ownerId], references: [id])
+  region                      String?
+  afkChannelId                String?  @map("afk_channel_id")
+  afkTimeout                  Int      @map("afk_timeout")
+  widgetEnabled               Boolean? @map("widget_enabled")
+  widgetChannelId             String?  @map("widget_channel_id")
+  verificationLevel           Int      @map("verification_level")
+  defaultMessageNotifications Int      @map("default_message_notifications")
+  explicitContentFilter       Int      @map("explicit_content_filter")
+  mfaLevel                    Int      @map("mfa_level")
+  applicationId               String?  @map("application_id")
+  systemChannelId             String?  @map("system_channel_id")
+  systemChannelFlags          Int      @map("system_channel_flags")
+  rulesChannelId              String?  @map("rules_channel_id")
+  maxPresences                Int?     @map("max_presences")
+  maxMembers                  Int?     @map("max_members")
+  vanityUrlCode               String?  @map("vanity_url_code")
+  description                 String?
+  banner                      String?
+  premiumTier                 Int      @map("premium_tier")
+  premiumSubscriptionCount    Int?     @map("premium_subscription_count")
+  preferredLocale             String   @default("en-US") @map("preferred_locale")
+  publicUpdatesChannelId      String?  @map("public_updates_channel_id")
+  maxVideoChannelUsers        Int?     @map("max_video_channel_users")
+  maxStageVideoChannelUsers   Int?     @map("max_stage_video_channel_users")
+  approximateMemberCount      Int?     @map("approximate_member_count")
+  approximatePresenceCount    Int?     @map("approximate_presence_count")
+  nsfwLevel                   Int      @map("nsfw_level")
+  premiumProgressBarEnabled   Boolean  @map("premium_progress_bar_enabled")
+  safetyAlertsChannelId       String?  @map("safety_alerts_channel_id")
+
+  features String[]
+
+  welcomeScreen WelcomeScreen?
+  incidentsData IncidentsData?
+
+  roles    Role[]
+  emojis   Emoji[]
+  stickers Sticker[]
+
+  members GuildMember[]
+  bans    Ban[]
+  logs    Log[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  settings Json
+
+  @@map("guilds")
+}
+
+model WelcomeScreen {
+  id              String                 @id @default(uuid())
+  description     String?
+  guildId         String                 @unique @map("guild_id")
+  guild           Guild                  @relation(fields: [guildId], references: [id])
+  welcomeChannels WelcomeScreenChannel[]
+
+  @@map("welcome_screens")
+}
+
+model WelcomeScreenChannel {
+  id              String        @id @default(uuid())
+  channelId       String        @map("channel_id")
+  description     String
+  emojiId         String?       @map("emoji_id")
+  emojiName       String?       @map("emoji_name")
+  welcomeScreenId String        @map("welcome_screen_id")
+  welcomeScreen   WelcomeScreen @relation(fields: [welcomeScreenId], references: [id])
+
+  @@map("welcome_screen_channels")
+}
+
+model IncidentsData {
+  id                   String    @id @default(uuid())
+  invitesDisabledUntil DateTime? @map("invites_disabled_until")
+  dmsDisabledUntil     DateTime? @map("dms_disabled_until")
+  dmSpamDetectedAt     DateTime? @map("dm_spam_detected_at")
+  raidDetectedAt       DateTime? @map("raid_detected_at")
+  guildId              String    @unique @map("guild_id")
+  guild                Guild     @relation(fields: [guildId], references: [id])
+
+  @@map("incidents_data")
+}
+
+// =========================================
+// Role Object — https://docs.discord.com/developers/topics/permissions#role-object
+// =========================================
+model Role {
+  id             String  @id
+  name           String
+  color          Int?
+  primaryColor   Int     @map("primary_color")
+  secondaryColor Int?    @map("secondary_color")
+  tertiaryColor  Int?    @map("tertiary_color")
+  hoist          Boolean
+  icon           String?
+  unicodeEmoji   String? @map("unicode_emoji")
+  position       Int
+  permissions    String
+  managed        Boolean
+  mentionable    Boolean
+  flags          Int
+
+  tagBotId                 String?  @map("tag_bot_id")
+  tagIntegrationId         String?  @map("tag_integration_id")
+  tagPremiumSubscriber     Boolean? @map("tag_premium_subscriber")
+  tagSubscriptionListingId String?  @map("tag_subscription_listing_id")
+  tagAvailableForPurchase  Boolean? @map("tag_available_for_purchase")
+  tagGuildConnections      Boolean? @map("tag_guild_connections")
+
+  bot User? @relation("RoleBot", fields: [tagBotId], references: [id])
+
+  guildId String @map("guild_id")
+  guild   Guild  @relation(fields: [guildId], references: [id])
+
+  emojis Emoji[] @relation("EmojiRoles")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
   @@index([guildId])
+  @@map("roles")
 }
 
-model ModLog {
-  id          String           @id @default(uuid())
-  guildId     String
-  targetId    String?
-  moderatorId String
-  action      ModerationAction
-  reason      String?
-  duration    Int?
-  expiresAt   DateTime?
-  createdAt   DateTime         @default(now())
-  memberId    String?
-  guild       Guild            @relation(fields: [guildId], references: [id])
-  member      GuildMember?     @relation(fields: [memberId], references: [id])
+// =========================================
+// Emoji Object — https://docs.discord.com/developers/resources/emoji#emoji-object
+// =========================================
+model Emoji {
+  id            String   @id @default(uuid())
+  discordId     String?  @map("discord_id")
+  name          String?
+  requireColons Boolean? @map("require_colons")
+  managed       Boolean?
+  animated      Boolean?
+  available     Boolean?
+
+  guildId String @map("guild_id")
+  guild   Guild  @relation(fields: [guildId], references: [id])
+
+  creatorId String? @map("creator_id")
+  creator   User?   @relation("EmojiCreator", fields: [creatorId], references: [id])
+
+  roles Role[] @relation("EmojiRoles")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([guildId])
-  @@index([targetId])
-  @@index([guildId, memberId])
+  @@map("emojis")
 }
 
-model Warning {
-  id          String       @id @default(uuid())
-  guildId     String
-  userId      String
-  moderatorId String
-  reason      String
-  active      Boolean      @default(true)
-  createdAt   DateTime     @default(now())
-  expiresAt   DateTime?
-  memberId    String?
-  guild       Guild        @relation(fields: [guildId], references: [id])
-  member      GuildMember? @relation(fields: [memberId], references: [id])
-
-  @@index([guildId, userId])
-  @@index([guildId, memberId])
+// =========================================
+// Sticker Object — https://docs.discord.com/developers/resources/sticker#sticker-object
+// =========================================
+enum StickerType {
+  STANDARD
+  GUILD
 }
 
+enum StickerFormatType {
+  PNG
+  APNG
+  LOTTIE
+  GIF
+}
+
+model Sticker {
+  id          String            @id @default(uuid())
+  discordId   String?           @map("discord_id")
+  packId      String?           @map("pack_id")
+  name        String
+  description String?
+  tags        String
+  type        StickerType
+  formatType  StickerFormatType @map("format_type")
+  available   Boolean?
+  sortValue   Int?              @map("sort_value")
+
+  guildId String? @map("guild_id")
+  guild   Guild?  @relation(fields: [guildId], references: [id])
+
+  creatorId String? @map("creator_id")
+  creator   User?   @relation("StickerCreator", fields: [creatorId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([guildId])
+  @@map("stickers")
+}
+
+// =========================================
+// Guild Member Object — https://docs.discord.com/developers/resources/guild#guild-member-object
+// =========================================
+model GuildMember {
+  id String @id @default(cuid())
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+
+  guildId String @map("guild_id")
+  guild   Guild  @relation(fields: [guildId], references: [id])
+
+  nick                       String?
+  avatar                     String?
+  banner                     String?
+  roles                      String[]
+  joinedAt                   DateTime? @map("joined_at")
+  premiumSince               DateTime? @map("premium_since")
+  deaf                       Boolean   @default(false)
+  mute                       Boolean   @default(false)
+  flags                      Int       @default(0)
+  pending                    Boolean?  @default(false)
+  permissions                String?
+  communicationDisabledUntil DateTime? @map("communication_disabled_until")
+
+  avatarDecorationData Json? @map("avatar_decoration_data")
+  collectibles         Json?
+
+  bans Ban[]
+  logs Log[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, guildId])
+  @@map("guild_members")
+}
+
+// =========================================
+// Ban Object — https://docs.discord.com/developers/resources/guild#ban-object
+// =========================================
 model Ban {
-  id          String       @id @default(uuid())
-  guildId     String
-  userId      String
-  moderatorId String
-  reason      String?
-  active      Boolean      @default(true)
-  duration    Int?
-  expiresAt   DateTime?
-  createdAt   DateTime     @default(now())
-  memberId    String?
-  guild       Guild        @relation(fields: [guildId], references: [id])
-  member      GuildMember? @relation(fields: [memberId], references: [id])
+  id     String  @id @default(uuid())
+  reason String?
+
+  guildId String @map("guild_id")
+  guild   Guild  @relation(fields: [guildId], references: [id])
+
+  userId String @map("user_id")
+  user   User   @relation("BanTarget", fields: [userId], references: [id])
+
+  moderatorId String @map("moderator_id")
+  moderator   User   @relation("BanModerator", fields: [moderatorId], references: [id])
+
+  memberId String?      @map("member_id")
+  member   GuildMember? @relation(fields: [memberId], references: [id])
+
+  active    Boolean   @default(true)
+  duration  Int?
+  expiresAt DateTime? @map("expires_at")
+  createdAt DateTime  @default(now()) @map("created_at")
 
   @@index([guildId, userId])
   @@index([guildId, memberId])
+  @@map("bans")
 }
 
-model Mute {
-  id          String       @id @default(uuid())
-  guildId     String
-  userId      String
-  moderatorId String
-  reason      String?
-  active      Boolean      @default(true)
-  duration    Int?
-  expiresAt   DateTime?
-  createdAt   DateTime     @default(now())
-  memberId    String?
-  guild       Guild        @relation(fields: [guildId], references: [id])
-  member      GuildMember? @relation(fields: [memberId], references: [id])
-
-  @@index([guildId, userId])
-  @@index([guildId, memberId])
-}
-
-model Kick {
-  id          String       @id @default(uuid())
-  guildId     String
-  userId      String
-  moderatorId String
-  reason      String?
-  createdAt   DateTime     @default(now())
-  memberId    String?
-  guild       Guild        @relation(fields: [guildId], references: [id])
-  member      GuildMember? @relation(fields: [memberId], references: [id])
-
-  @@index([guildId, userId])
-  @@index([guildId, memberId])
-}
-
-model Purge {
-  id          String   @id @default(uuid())
-  guildId     String
-  moderatorId String
-  targetId    String?
-  amount      Int
-  reason      String?
-  createdAt   DateTime @default(now())
-  guild       Guild    @relation(fields: [guildId], references: [id])
-
-  @@index([guildId])
-}
-
-model Pardon {
-  id          String       @id @default(uuid())
-  guildId     String
-  targetId    String
-  moderatorId String
-  type        PardonType
-  reason      String?
-  createdAt   DateTime     @default(now())
-  memberId    String?
-  guild       Guild        @relation(fields: [guildId], references: [id])
-  member      GuildMember? @relation(fields: [memberId], references: [id])
-
-  @@index([guildId, targetId])
-  @@index([guildId, memberId])
-}
-
-enum PermissionLevel {
-  NONE
-  MOD
-  ADMIN
-}
-
-enum ModerationAction {
-  WARN
+// =========================================
+// General Punishment / Log Object
+// =========================================
+enum LogAction {
   BAN
   UNBAN
   KICK
   MUTE
   UNMUTE
-  PURGE
+  WARN
   PARDON
+  PURGE
 }
 
-enum PardonType {
-  UNBAN
-  UNMUTE
+model Log {
+  id        String    @id @default(uuid())
+  action    LogAction
+  reason    String?
+  duration  Int?
+  expiresAt DateTime? @map("expires_at")
+  amount    Int?
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  guildId String @map("guild_id")
+  guild   Guild  @relation(fields: [guildId], references: [id])
+
+  targetId String? @map("target_id")
+  target   User?   @relation("LogTarget", fields: [targetId], references: [id])
+
+  moderatorId String @map("moderator_id")
+  moderator   User   @relation("LogModerator", fields: [moderatorId], references: [id])
+
+  memberId String?      @map("member_id")
+  member   GuildMember? @relation(fields: [memberId], references: [id])
+
+  @@index([guildId])
+  @@index([guildId, targetId])
+  @@index([guildId, memberId])
+  @@map("logs")
 }

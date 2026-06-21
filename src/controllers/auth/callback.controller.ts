@@ -11,11 +11,11 @@ export const discordCallback = async (req: Request, res: Response) => {
   const tokenRes = await fetch("https://discord.com/api/oauth2/token", {
     method: "POST",
     body: new URLSearchParams({
-      client_id: process.env.DISCORD_CLIENT_ID!,
-      client_secret: process.env.DISCORD_CLIENT_SECRET!,
+      client_id: process.env.MODERATION_CLIENT_ID!,
+      client_secret: process.env.MODERATION_CLIENT_SECRET!,
       grant_type: "authorization_code",
       code: code as string,
-      redirect_uri: process.env.DISCORD_REDIRECT_URI!,
+      redirect_uri: process.env.MODERATION_REDIRECT_URI!,
     }),
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
   });
