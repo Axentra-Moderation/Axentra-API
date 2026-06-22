@@ -176,15 +176,15 @@ mod-api/
 
 ### Moderation — `/guilds/:guildId/moderation`
 
-| Method   | Path                                       | Caller | Description                          |
-| -------- | ------------------------------------------ | ------ | ------------------------------------ |
-| `POST`   | `/guilds/:guildId/moderation/ban/:userId`  | Both   | Ban a user                           |
-| `DELETE` | `/guilds/:guildId/moderation/ban/:userId`  | Both   | Unban a user                         |
-| `POST`   | `/guilds/:guildId/moderation/kick/:userId` | Both   | Kick a user                          |
-| `POST`   | `/guilds/:guildId/moderation/mute/Use`     | Both   | Mute a user (with optional duration) |
-| `POST`   | `/guilds/:guildId/moderation/unmute`       | Both   | Remove mute                          |
-| `POST`   | `/guilds/:guildId/moderation/warn`         | Both   | Issue a warning                      |
-| `POST`   | `/guilds/:guildId/moderation/purge`        | Both   | Bulk delete messages                 |
+| Method   | Path                                         | Caller | Description                          |
+| -------- | -------------------------------------------- | ------ | ------------------------------------ |
+| `POST`   | `/guilds/:guildId/moderation/ban/:userId`    | Both   | Ban a user                           |
+| `DELETE` | `/guilds/:guildId/moderation/ban/:userId`    | Both   | Unban a user                         |
+| `POST`   | `/guilds/:guildId/moderation/kick/:userId`   | Both   | Kick/Soft Ban a user                 |
+| `POST`   | `/guilds/:guildId/moderation/mute/:userId`   | Both   | Mute a user (with optional duration) |
+| `DELETE` | `/guilds/:guildId/moderation/unmute/:userId` | Both   | Remove mute                          |
+| `POST`   | `/guilds/:guildId/moderation/warn/:userId`   | Both   | Issue a warning                      |
+| `DELETE` | `/guilds/:guildId/moderation/purge/:userId`  | Both   | Bulk delete messages                 |
 
 ### Warnings — `/guilds/:guildId/warnings`
 

@@ -8,11 +8,16 @@ export const banUser = async (req: Request, res: Response) => {
   const userId = req.params["userId"] as string;
   const moderatorId = req.body["moderatorId"] as string;
   const reason = req.body["reason"] as string;
+  const duration = req.body["duration"] as number | undefined;
   const prisma = getPrisma();
 
   try {
     const userBans = await prisma.ban.findMany({
       where: { guildId: guildId, userId: userId },
+    });
+
+    const member = await prisma.guildMember.findFirst({
+      where: { userId: userId, guildId: guildId },
     });
 
     if (userBans.length >= 1) {
@@ -45,18 +50,38 @@ export const banUser = async (req: Request, res: Response) => {
       });
     }
 
-    const log = await prisma.ban.create({
+    const expiresAt = duration ? new Date(Date.now() + duration * 1000) : null;
+
+    const ban = await prisma.ban.create({
       data: {
         reason: reason,
         guildId: guildId,
         userId: userId,
         moderatorId: moderatorId,
+        memberId: member?.id ?? null,
         active: true,
+        duration: duration ?? null,
+        expiresAt: expiresAt,
+      },
+    });
+
+    const log = await prisma.log.create({
+      data: {
+        action: "BAN",
+        reason: reason,
+        duration: duration ?? null,
+        expiresAt: expiresAt,
+        guildId: guildId,
+        targetId: userId,
+        moderatorId: moderatorId,
+        memberId: member?.id ?? null,
+        banId: ban.id,
       },
     });
 
     // 3. Send successful response and return early
     return res.status(200).json({
+      ban,
       log,
     });
   } catch (err) {

@@ -364,7 +364,8 @@ export const LogScalarFieldEnum = {
   guildId: 'guildId',
   targetId: 'targetId',
   moderatorId: 'moderatorId',
-  memberId: 'memberId'
+  memberId: 'memberId',
+  banId: 'banId'
 } as const
 
 export type LogScalarFieldEnum = (typeof LogScalarFieldEnum)[keyof typeof LogScalarFieldEnum]

@@ -1,7 +1,9 @@
-console.log("Starting...");
 import "dotenv/config";
 import { createApp } from "./app";
 import { logger } from "./utils/logger";
+import { startBanExpirySweeper } from "./jobs/ban.expiry.sweeper";
+
+logger.info("Starting");
 
 const PORT = process.env.PORT ?? 3000;
 
@@ -23,3 +25,5 @@ for (const key of required) {
 createApp().listen(PORT, () => {
   logger.info(`API listening on port ${PORT}`);
 });
+
+startBanExpirySweeper;

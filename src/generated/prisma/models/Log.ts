@@ -49,6 +49,7 @@ export type LogMinAggregateOutputType = {
   targetId: string | null
   moderatorId: string | null
   memberId: string | null
+  banId: string | null
 }
 
 export type LogMaxAggregateOutputType = {
@@ -64,6 +65,7 @@ export type LogMaxAggregateOutputType = {
   targetId: string | null
   moderatorId: string | null
   memberId: string | null
+  banId: string | null
 }
 
 export type LogCountAggregateOutputType = {
@@ -79,6 +81,7 @@ export type LogCountAggregateOutputType = {
   targetId: number
   moderatorId: number
   memberId: number
+  banId: number
   _all: number
 }
 
@@ -106,6 +109,7 @@ export type LogMinAggregateInputType = {
   targetId?: true
   moderatorId?: true
   memberId?: true
+  banId?: true
 }
 
 export type LogMaxAggregateInputType = {
@@ -121,6 +125,7 @@ export type LogMaxAggregateInputType = {
   targetId?: true
   moderatorId?: true
   memberId?: true
+  banId?: true
 }
 
 export type LogCountAggregateInputType = {
@@ -136,6 +141,7 @@ export type LogCountAggregateInputType = {
   targetId?: true
   moderatorId?: true
   memberId?: true
+  banId?: true
   _all?: true
 }
 
@@ -238,6 +244,7 @@ export type LogGroupByOutputType = {
   targetId: string | null
   moderatorId: string
   memberId: string | null
+  banId: string | null
   _count: LogCountAggregateOutputType | null
   _avg: LogAvgAggregateOutputType | null
   _sum: LogSumAggregateOutputType | null
@@ -276,10 +283,12 @@ export type LogWhereInput = {
   targetId?: Prisma.StringNullableFilter<"Log"> | string | null
   moderatorId?: Prisma.StringFilter<"Log"> | string
   memberId?: Prisma.StringNullableFilter<"Log"> | string | null
+  banId?: Prisma.StringNullableFilter<"Log"> | string | null
   guild?: Prisma.XOR<Prisma.GuildScalarRelationFilter, Prisma.GuildWhereInput>
   target?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   moderator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   member?: Prisma.XOR<Prisma.GuildMemberNullableScalarRelationFilter, Prisma.GuildMemberWhereInput> | null
+  references?: Prisma.XOR<Prisma.BanNullableScalarRelationFilter, Prisma.BanWhereInput> | null
 }
 
 export type LogOrderByWithRelationInput = {
@@ -295,10 +304,12 @@ export type LogOrderByWithRelationInput = {
   targetId?: Prisma.SortOrderInput | Prisma.SortOrder
   moderatorId?: Prisma.SortOrder
   memberId?: Prisma.SortOrderInput | Prisma.SortOrder
+  banId?: Prisma.SortOrderInput | Prisma.SortOrder
   guild?: Prisma.GuildOrderByWithRelationInput
   target?: Prisma.UserOrderByWithRelationInput
   moderator?: Prisma.UserOrderByWithRelationInput
   member?: Prisma.GuildMemberOrderByWithRelationInput
+  references?: Prisma.BanOrderByWithRelationInput
 }
 
 export type LogWhereUniqueInput = Prisma.AtLeast<{
@@ -317,10 +328,12 @@ export type LogWhereUniqueInput = Prisma.AtLeast<{
   targetId?: Prisma.StringNullableFilter<"Log"> | string | null
   moderatorId?: Prisma.StringFilter<"Log"> | string
   memberId?: Prisma.StringNullableFilter<"Log"> | string | null
+  banId?: Prisma.StringNullableFilter<"Log"> | string | null
   guild?: Prisma.XOR<Prisma.GuildScalarRelationFilter, Prisma.GuildWhereInput>
   target?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   moderator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   member?: Prisma.XOR<Prisma.GuildMemberNullableScalarRelationFilter, Prisma.GuildMemberWhereInput> | null
+  references?: Prisma.XOR<Prisma.BanNullableScalarRelationFilter, Prisma.BanWhereInput> | null
 }, "id">
 
 export type LogOrderByWithAggregationInput = {
@@ -336,6 +349,7 @@ export type LogOrderByWithAggregationInput = {
   targetId?: Prisma.SortOrderInput | Prisma.SortOrder
   moderatorId?: Prisma.SortOrder
   memberId?: Prisma.SortOrderInput | Prisma.SortOrder
+  banId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.LogCountOrderByAggregateInput
   _avg?: Prisma.LogAvgOrderByAggregateInput
   _max?: Prisma.LogMaxOrderByAggregateInput
@@ -359,6 +373,7 @@ export type LogScalarWhereWithAggregatesInput = {
   targetId?: Prisma.StringNullableWithAggregatesFilter<"Log"> | string | null
   moderatorId?: Prisma.StringWithAggregatesFilter<"Log"> | string
   memberId?: Prisma.StringNullableWithAggregatesFilter<"Log"> | string | null
+  banId?: Prisma.StringNullableWithAggregatesFilter<"Log"> | string | null
 }
 
 export type LogCreateInput = {
@@ -374,6 +389,7 @@ export type LogCreateInput = {
   target?: Prisma.UserCreateNestedOneWithoutLogsReceivedInput
   moderator: Prisma.UserCreateNestedOneWithoutLogsIssuedInput
   member?: Prisma.GuildMemberCreateNestedOneWithoutLogsInput
+  references?: Prisma.BanCreateNestedOneWithoutLogsInput
 }
 
 export type LogUncheckedCreateInput = {
@@ -389,6 +405,7 @@ export type LogUncheckedCreateInput = {
   targetId?: string | null
   moderatorId: string
   memberId?: string | null
+  banId?: string | null
 }
 
 export type LogUpdateInput = {
@@ -404,6 +421,7 @@ export type LogUpdateInput = {
   target?: Prisma.UserUpdateOneWithoutLogsReceivedNestedInput
   moderator?: Prisma.UserUpdateOneRequiredWithoutLogsIssuedNestedInput
   member?: Prisma.GuildMemberUpdateOneWithoutLogsNestedInput
+  references?: Prisma.BanUpdateOneWithoutLogsNestedInput
 }
 
 export type LogUncheckedUpdateInput = {
@@ -419,6 +437,7 @@ export type LogUncheckedUpdateInput = {
   targetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderatorId?: Prisma.StringFieldUpdateOperationsInput | string
   memberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LogCreateManyInput = {
@@ -434,6 +453,7 @@ export type LogCreateManyInput = {
   targetId?: string | null
   moderatorId: string
   memberId?: string | null
+  banId?: string | null
 }
 
 export type LogUpdateManyMutationInput = {
@@ -460,6 +480,7 @@ export type LogUncheckedUpdateManyInput = {
   targetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderatorId?: Prisma.StringFieldUpdateOperationsInput | string
   memberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LogListRelationFilter = {
@@ -485,6 +506,7 @@ export type LogCountOrderByAggregateInput = {
   targetId?: Prisma.SortOrder
   moderatorId?: Prisma.SortOrder
   memberId?: Prisma.SortOrder
+  banId?: Prisma.SortOrder
 }
 
 export type LogAvgOrderByAggregateInput = {
@@ -505,6 +527,7 @@ export type LogMaxOrderByAggregateInput = {
   targetId?: Prisma.SortOrder
   moderatorId?: Prisma.SortOrder
   memberId?: Prisma.SortOrder
+  banId?: Prisma.SortOrder
 }
 
 export type LogMinOrderByAggregateInput = {
@@ -520,6 +543,7 @@ export type LogMinOrderByAggregateInput = {
   targetId?: Prisma.SortOrder
   moderatorId?: Prisma.SortOrder
   memberId?: Prisma.SortOrder
+  banId?: Prisma.SortOrder
 }
 
 export type LogSumOrderByAggregateInput = {
@@ -695,6 +719,48 @@ export type LogUncheckedUpdateManyWithoutMemberNestedInput = {
   deleteMany?: Prisma.LogScalarWhereInput | Prisma.LogScalarWhereInput[]
 }
 
+export type LogCreateNestedManyWithoutReferencesInput = {
+  create?: Prisma.XOR<Prisma.LogCreateWithoutReferencesInput, Prisma.LogUncheckedCreateWithoutReferencesInput> | Prisma.LogCreateWithoutReferencesInput[] | Prisma.LogUncheckedCreateWithoutReferencesInput[]
+  connectOrCreate?: Prisma.LogCreateOrConnectWithoutReferencesInput | Prisma.LogCreateOrConnectWithoutReferencesInput[]
+  createMany?: Prisma.LogCreateManyReferencesInputEnvelope
+  connect?: Prisma.LogWhereUniqueInput | Prisma.LogWhereUniqueInput[]
+}
+
+export type LogUncheckedCreateNestedManyWithoutReferencesInput = {
+  create?: Prisma.XOR<Prisma.LogCreateWithoutReferencesInput, Prisma.LogUncheckedCreateWithoutReferencesInput> | Prisma.LogCreateWithoutReferencesInput[] | Prisma.LogUncheckedCreateWithoutReferencesInput[]
+  connectOrCreate?: Prisma.LogCreateOrConnectWithoutReferencesInput | Prisma.LogCreateOrConnectWithoutReferencesInput[]
+  createMany?: Prisma.LogCreateManyReferencesInputEnvelope
+  connect?: Prisma.LogWhereUniqueInput | Prisma.LogWhereUniqueInput[]
+}
+
+export type LogUpdateManyWithoutReferencesNestedInput = {
+  create?: Prisma.XOR<Prisma.LogCreateWithoutReferencesInput, Prisma.LogUncheckedCreateWithoutReferencesInput> | Prisma.LogCreateWithoutReferencesInput[] | Prisma.LogUncheckedCreateWithoutReferencesInput[]
+  connectOrCreate?: Prisma.LogCreateOrConnectWithoutReferencesInput | Prisma.LogCreateOrConnectWithoutReferencesInput[]
+  upsert?: Prisma.LogUpsertWithWhereUniqueWithoutReferencesInput | Prisma.LogUpsertWithWhereUniqueWithoutReferencesInput[]
+  createMany?: Prisma.LogCreateManyReferencesInputEnvelope
+  set?: Prisma.LogWhereUniqueInput | Prisma.LogWhereUniqueInput[]
+  disconnect?: Prisma.LogWhereUniqueInput | Prisma.LogWhereUniqueInput[]
+  delete?: Prisma.LogWhereUniqueInput | Prisma.LogWhereUniqueInput[]
+  connect?: Prisma.LogWhereUniqueInput | Prisma.LogWhereUniqueInput[]
+  update?: Prisma.LogUpdateWithWhereUniqueWithoutReferencesInput | Prisma.LogUpdateWithWhereUniqueWithoutReferencesInput[]
+  updateMany?: Prisma.LogUpdateManyWithWhereWithoutReferencesInput | Prisma.LogUpdateManyWithWhereWithoutReferencesInput[]
+  deleteMany?: Prisma.LogScalarWhereInput | Prisma.LogScalarWhereInput[]
+}
+
+export type LogUncheckedUpdateManyWithoutReferencesNestedInput = {
+  create?: Prisma.XOR<Prisma.LogCreateWithoutReferencesInput, Prisma.LogUncheckedCreateWithoutReferencesInput> | Prisma.LogCreateWithoutReferencesInput[] | Prisma.LogUncheckedCreateWithoutReferencesInput[]
+  connectOrCreate?: Prisma.LogCreateOrConnectWithoutReferencesInput | Prisma.LogCreateOrConnectWithoutReferencesInput[]
+  upsert?: Prisma.LogUpsertWithWhereUniqueWithoutReferencesInput | Prisma.LogUpsertWithWhereUniqueWithoutReferencesInput[]
+  createMany?: Prisma.LogCreateManyReferencesInputEnvelope
+  set?: Prisma.LogWhereUniqueInput | Prisma.LogWhereUniqueInput[]
+  disconnect?: Prisma.LogWhereUniqueInput | Prisma.LogWhereUniqueInput[]
+  delete?: Prisma.LogWhereUniqueInput | Prisma.LogWhereUniqueInput[]
+  connect?: Prisma.LogWhereUniqueInput | Prisma.LogWhereUniqueInput[]
+  update?: Prisma.LogUpdateWithWhereUniqueWithoutReferencesInput | Prisma.LogUpdateWithWhereUniqueWithoutReferencesInput[]
+  updateMany?: Prisma.LogUpdateManyWithWhereWithoutReferencesInput | Prisma.LogUpdateManyWithWhereWithoutReferencesInput[]
+  deleteMany?: Prisma.LogScalarWhereInput | Prisma.LogScalarWhereInput[]
+}
+
 export type EnumLogActionFieldUpdateOperationsInput = {
   set?: $Enums.LogAction
 }
@@ -711,6 +777,7 @@ export type LogCreateWithoutTargetInput = {
   guild: Prisma.GuildCreateNestedOneWithoutLogsInput
   moderator: Prisma.UserCreateNestedOneWithoutLogsIssuedInput
   member?: Prisma.GuildMemberCreateNestedOneWithoutLogsInput
+  references?: Prisma.BanCreateNestedOneWithoutLogsInput
 }
 
 export type LogUncheckedCreateWithoutTargetInput = {
@@ -725,6 +792,7 @@ export type LogUncheckedCreateWithoutTargetInput = {
   guildId: string
   moderatorId: string
   memberId?: string | null
+  banId?: string | null
 }
 
 export type LogCreateOrConnectWithoutTargetInput = {
@@ -749,6 +817,7 @@ export type LogCreateWithoutModeratorInput = {
   guild: Prisma.GuildCreateNestedOneWithoutLogsInput
   target?: Prisma.UserCreateNestedOneWithoutLogsReceivedInput
   member?: Prisma.GuildMemberCreateNestedOneWithoutLogsInput
+  references?: Prisma.BanCreateNestedOneWithoutLogsInput
 }
 
 export type LogUncheckedCreateWithoutModeratorInput = {
@@ -763,6 +832,7 @@ export type LogUncheckedCreateWithoutModeratorInput = {
   guildId: string
   targetId?: string | null
   memberId?: string | null
+  banId?: string | null
 }
 
 export type LogCreateOrConnectWithoutModeratorInput = {
@@ -807,6 +877,7 @@ export type LogScalarWhereInput = {
   targetId?: Prisma.StringNullableFilter<"Log"> | string | null
   moderatorId?: Prisma.StringFilter<"Log"> | string
   memberId?: Prisma.StringNullableFilter<"Log"> | string | null
+  banId?: Prisma.StringNullableFilter<"Log"> | string | null
 }
 
 export type LogUpsertWithWhereUniqueWithoutModeratorInput = {
@@ -837,6 +908,7 @@ export type LogCreateWithoutGuildInput = {
   target?: Prisma.UserCreateNestedOneWithoutLogsReceivedInput
   moderator: Prisma.UserCreateNestedOneWithoutLogsIssuedInput
   member?: Prisma.GuildMemberCreateNestedOneWithoutLogsInput
+  references?: Prisma.BanCreateNestedOneWithoutLogsInput
 }
 
 export type LogUncheckedCreateWithoutGuildInput = {
@@ -851,6 +923,7 @@ export type LogUncheckedCreateWithoutGuildInput = {
   targetId?: string | null
   moderatorId: string
   memberId?: string | null
+  banId?: string | null
 }
 
 export type LogCreateOrConnectWithoutGuildInput = {
@@ -891,6 +964,7 @@ export type LogCreateWithoutMemberInput = {
   guild: Prisma.GuildCreateNestedOneWithoutLogsInput
   target?: Prisma.UserCreateNestedOneWithoutLogsReceivedInput
   moderator: Prisma.UserCreateNestedOneWithoutLogsIssuedInput
+  references?: Prisma.BanCreateNestedOneWithoutLogsInput
 }
 
 export type LogUncheckedCreateWithoutMemberInput = {
@@ -905,6 +979,7 @@ export type LogUncheckedCreateWithoutMemberInput = {
   guildId: string
   targetId?: string | null
   moderatorId: string
+  banId?: string | null
 }
 
 export type LogCreateOrConnectWithoutMemberInput = {
@@ -933,6 +1008,62 @@ export type LogUpdateManyWithWhereWithoutMemberInput = {
   data: Prisma.XOR<Prisma.LogUpdateManyMutationInput, Prisma.LogUncheckedUpdateManyWithoutMemberInput>
 }
 
+export type LogCreateWithoutReferencesInput = {
+  id?: string
+  action: $Enums.LogAction
+  reason?: string | null
+  duration?: number | null
+  expiresAt?: Date | string | null
+  amount?: number | null
+  active?: boolean
+  createdAt?: Date | string
+  guild: Prisma.GuildCreateNestedOneWithoutLogsInput
+  target?: Prisma.UserCreateNestedOneWithoutLogsReceivedInput
+  moderator: Prisma.UserCreateNestedOneWithoutLogsIssuedInput
+  member?: Prisma.GuildMemberCreateNestedOneWithoutLogsInput
+}
+
+export type LogUncheckedCreateWithoutReferencesInput = {
+  id?: string
+  action: $Enums.LogAction
+  reason?: string | null
+  duration?: number | null
+  expiresAt?: Date | string | null
+  amount?: number | null
+  active?: boolean
+  createdAt?: Date | string
+  guildId: string
+  targetId?: string | null
+  moderatorId: string
+  memberId?: string | null
+}
+
+export type LogCreateOrConnectWithoutReferencesInput = {
+  where: Prisma.LogWhereUniqueInput
+  create: Prisma.XOR<Prisma.LogCreateWithoutReferencesInput, Prisma.LogUncheckedCreateWithoutReferencesInput>
+}
+
+export type LogCreateManyReferencesInputEnvelope = {
+  data: Prisma.LogCreateManyReferencesInput | Prisma.LogCreateManyReferencesInput[]
+  skipDuplicates?: boolean
+}
+
+export type LogUpsertWithWhereUniqueWithoutReferencesInput = {
+  where: Prisma.LogWhereUniqueInput
+  update: Prisma.XOR<Prisma.LogUpdateWithoutReferencesInput, Prisma.LogUncheckedUpdateWithoutReferencesInput>
+  create: Prisma.XOR<Prisma.LogCreateWithoutReferencesInput, Prisma.LogUncheckedCreateWithoutReferencesInput>
+}
+
+export type LogUpdateWithWhereUniqueWithoutReferencesInput = {
+  where: Prisma.LogWhereUniqueInput
+  data: Prisma.XOR<Prisma.LogUpdateWithoutReferencesInput, Prisma.LogUncheckedUpdateWithoutReferencesInput>
+}
+
+export type LogUpdateManyWithWhereWithoutReferencesInput = {
+  where: Prisma.LogScalarWhereInput
+  data: Prisma.XOR<Prisma.LogUpdateManyMutationInput, Prisma.LogUncheckedUpdateManyWithoutReferencesInput>
+}
+
 export type LogCreateManyTargetInput = {
   id?: string
   action: $Enums.LogAction
@@ -945,6 +1076,7 @@ export type LogCreateManyTargetInput = {
   guildId: string
   moderatorId: string
   memberId?: string | null
+  banId?: string | null
 }
 
 export type LogCreateManyModeratorInput = {
@@ -959,6 +1091,7 @@ export type LogCreateManyModeratorInput = {
   guildId: string
   targetId?: string | null
   memberId?: string | null
+  banId?: string | null
 }
 
 export type LogUpdateWithoutTargetInput = {
@@ -973,6 +1106,7 @@ export type LogUpdateWithoutTargetInput = {
   guild?: Prisma.GuildUpdateOneRequiredWithoutLogsNestedInput
   moderator?: Prisma.UserUpdateOneRequiredWithoutLogsIssuedNestedInput
   member?: Prisma.GuildMemberUpdateOneWithoutLogsNestedInput
+  references?: Prisma.BanUpdateOneWithoutLogsNestedInput
 }
 
 export type LogUncheckedUpdateWithoutTargetInput = {
@@ -987,6 +1121,7 @@ export type LogUncheckedUpdateWithoutTargetInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   moderatorId?: Prisma.StringFieldUpdateOperationsInput | string
   memberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LogUncheckedUpdateManyWithoutTargetInput = {
@@ -1001,6 +1136,7 @@ export type LogUncheckedUpdateManyWithoutTargetInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   moderatorId?: Prisma.StringFieldUpdateOperationsInput | string
   memberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LogUpdateWithoutModeratorInput = {
@@ -1015,6 +1151,7 @@ export type LogUpdateWithoutModeratorInput = {
   guild?: Prisma.GuildUpdateOneRequiredWithoutLogsNestedInput
   target?: Prisma.UserUpdateOneWithoutLogsReceivedNestedInput
   member?: Prisma.GuildMemberUpdateOneWithoutLogsNestedInput
+  references?: Prisma.BanUpdateOneWithoutLogsNestedInput
 }
 
 export type LogUncheckedUpdateWithoutModeratorInput = {
@@ -1029,6 +1166,7 @@ export type LogUncheckedUpdateWithoutModeratorInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   memberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LogUncheckedUpdateManyWithoutModeratorInput = {
@@ -1043,6 +1181,7 @@ export type LogUncheckedUpdateManyWithoutModeratorInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   memberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LogCreateManyGuildInput = {
@@ -1057,6 +1196,7 @@ export type LogCreateManyGuildInput = {
   targetId?: string | null
   moderatorId: string
   memberId?: string | null
+  banId?: string | null
 }
 
 export type LogUpdateWithoutGuildInput = {
@@ -1071,6 +1211,7 @@ export type LogUpdateWithoutGuildInput = {
   target?: Prisma.UserUpdateOneWithoutLogsReceivedNestedInput
   moderator?: Prisma.UserUpdateOneRequiredWithoutLogsIssuedNestedInput
   member?: Prisma.GuildMemberUpdateOneWithoutLogsNestedInput
+  references?: Prisma.BanUpdateOneWithoutLogsNestedInput
 }
 
 export type LogUncheckedUpdateWithoutGuildInput = {
@@ -1085,6 +1226,7 @@ export type LogUncheckedUpdateWithoutGuildInput = {
   targetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderatorId?: Prisma.StringFieldUpdateOperationsInput | string
   memberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LogUncheckedUpdateManyWithoutGuildInput = {
@@ -1099,6 +1241,7 @@ export type LogUncheckedUpdateManyWithoutGuildInput = {
   targetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderatorId?: Prisma.StringFieldUpdateOperationsInput | string
   memberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LogCreateManyMemberInput = {
@@ -1113,6 +1256,7 @@ export type LogCreateManyMemberInput = {
   guildId: string
   targetId?: string | null
   moderatorId: string
+  banId?: string | null
 }
 
 export type LogUpdateWithoutMemberInput = {
@@ -1127,6 +1271,7 @@ export type LogUpdateWithoutMemberInput = {
   guild?: Prisma.GuildUpdateOneRequiredWithoutLogsNestedInput
   target?: Prisma.UserUpdateOneWithoutLogsReceivedNestedInput
   moderator?: Prisma.UserUpdateOneRequiredWithoutLogsIssuedNestedInput
+  references?: Prisma.BanUpdateOneWithoutLogsNestedInput
 }
 
 export type LogUncheckedUpdateWithoutMemberInput = {
@@ -1141,6 +1286,7 @@ export type LogUncheckedUpdateWithoutMemberInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderatorId?: Prisma.StringFieldUpdateOperationsInput | string
+  banId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LogUncheckedUpdateManyWithoutMemberInput = {
@@ -1155,6 +1301,67 @@ export type LogUncheckedUpdateManyWithoutMemberInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   targetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moderatorId?: Prisma.StringFieldUpdateOperationsInput | string
+  banId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type LogCreateManyReferencesInput = {
+  id?: string
+  action: $Enums.LogAction
+  reason?: string | null
+  duration?: number | null
+  expiresAt?: Date | string | null
+  amount?: number | null
+  active?: boolean
+  createdAt?: Date | string
+  guildId: string
+  targetId?: string | null
+  moderatorId: string
+  memberId?: string | null
+}
+
+export type LogUpdateWithoutReferencesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  action?: Prisma.EnumLogActionFieldUpdateOperationsInput | $Enums.LogAction
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  amount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guild?: Prisma.GuildUpdateOneRequiredWithoutLogsNestedInput
+  target?: Prisma.UserUpdateOneWithoutLogsReceivedNestedInput
+  moderator?: Prisma.UserUpdateOneRequiredWithoutLogsIssuedNestedInput
+  member?: Prisma.GuildMemberUpdateOneWithoutLogsNestedInput
+}
+
+export type LogUncheckedUpdateWithoutReferencesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  action?: Prisma.EnumLogActionFieldUpdateOperationsInput | $Enums.LogAction
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  amount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guildId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  moderatorId?: Prisma.StringFieldUpdateOperationsInput | string
+  memberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type LogUncheckedUpdateManyWithoutReferencesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  action?: Prisma.EnumLogActionFieldUpdateOperationsInput | $Enums.LogAction
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  amount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guildId?: Prisma.StringFieldUpdateOperationsInput | string
+  targetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  moderatorId?: Prisma.StringFieldUpdateOperationsInput | string
+  memberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1172,10 +1379,12 @@ export type LogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   targetId?: boolean
   moderatorId?: boolean
   memberId?: boolean
+  banId?: boolean
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
   target?: boolean | Prisma.Log$targetArgs<ExtArgs>
   moderator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   member?: boolean | Prisma.Log$memberArgs<ExtArgs>
+  references?: boolean | Prisma.Log$referencesArgs<ExtArgs>
 }, ExtArgs["result"]["log"]>
 
 export type LogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1191,10 +1400,12 @@ export type LogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   targetId?: boolean
   moderatorId?: boolean
   memberId?: boolean
+  banId?: boolean
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
   target?: boolean | Prisma.Log$targetArgs<ExtArgs>
   moderator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   member?: boolean | Prisma.Log$memberArgs<ExtArgs>
+  references?: boolean | Prisma.Log$referencesArgs<ExtArgs>
 }, ExtArgs["result"]["log"]>
 
 export type LogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1210,10 +1421,12 @@ export type LogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   targetId?: boolean
   moderatorId?: boolean
   memberId?: boolean
+  banId?: boolean
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
   target?: boolean | Prisma.Log$targetArgs<ExtArgs>
   moderator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   member?: boolean | Prisma.Log$memberArgs<ExtArgs>
+  references?: boolean | Prisma.Log$referencesArgs<ExtArgs>
 }, ExtArgs["result"]["log"]>
 
 export type LogSelectScalar = {
@@ -1229,26 +1442,30 @@ export type LogSelectScalar = {
   targetId?: boolean
   moderatorId?: boolean
   memberId?: boolean
+  banId?: boolean
 }
 
-export type LogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "action" | "reason" | "duration" | "expiresAt" | "amount" | "active" | "createdAt" | "guildId" | "targetId" | "moderatorId" | "memberId", ExtArgs["result"]["log"]>
+export type LogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "action" | "reason" | "duration" | "expiresAt" | "amount" | "active" | "createdAt" | "guildId" | "targetId" | "moderatorId" | "memberId" | "banId", ExtArgs["result"]["log"]>
 export type LogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
   target?: boolean | Prisma.Log$targetArgs<ExtArgs>
   moderator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   member?: boolean | Prisma.Log$memberArgs<ExtArgs>
+  references?: boolean | Prisma.Log$referencesArgs<ExtArgs>
 }
 export type LogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
   target?: boolean | Prisma.Log$targetArgs<ExtArgs>
   moderator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   member?: boolean | Prisma.Log$memberArgs<ExtArgs>
+  references?: boolean | Prisma.Log$referencesArgs<ExtArgs>
 }
 export type LogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   guild?: boolean | Prisma.GuildDefaultArgs<ExtArgs>
   target?: boolean | Prisma.Log$targetArgs<ExtArgs>
   moderator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   member?: boolean | Prisma.Log$memberArgs<ExtArgs>
+  references?: boolean | Prisma.Log$referencesArgs<ExtArgs>
 }
 
 export type $LogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1258,6 +1475,7 @@ export type $LogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     target: Prisma.$UserPayload<ExtArgs> | null
     moderator: Prisma.$UserPayload<ExtArgs>
     member: Prisma.$GuildMemberPayload<ExtArgs> | null
+    references: Prisma.$BanPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1272,6 +1490,7 @@ export type $LogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     targetId: string | null
     moderatorId: string
     memberId: string | null
+    banId: string | null
   }, ExtArgs["result"]["log"]>
   composites: {}
 }
@@ -1670,6 +1889,7 @@ export interface Prisma__LogClient<T, Null = never, ExtArgs extends runtime.Type
   target<T extends Prisma.Log$targetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Log$targetArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   moderator<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   member<T extends Prisma.Log$memberArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Log$memberArgs<ExtArgs>>): Prisma.Prisma__GuildMemberClient<runtime.Types.Result.GetResult<Prisma.$GuildMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  references<T extends Prisma.Log$referencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Log$referencesArgs<ExtArgs>>): Prisma.Prisma__BanClient<runtime.Types.Result.GetResult<Prisma.$BanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1711,6 +1931,7 @@ export interface LogFieldRefs {
   readonly targetId: Prisma.FieldRef<"Log", 'String'>
   readonly moderatorId: Prisma.FieldRef<"Log", 'String'>
   readonly memberId: Prisma.FieldRef<"Log", 'String'>
+  readonly banId: Prisma.FieldRef<"Log", 'String'>
 }
     
 
@@ -2147,6 +2368,25 @@ export type Log$memberArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   include?: Prisma.GuildMemberInclude<ExtArgs> | null
   where?: Prisma.GuildMemberWhereInput
+}
+
+/**
+ * Log.references
+ */
+export type Log$referencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Ban
+   */
+  select?: Prisma.BanSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Ban
+   */
+  omit?: Prisma.BanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BanInclude<ExtArgs> | null
+  where?: Prisma.BanWhereInput
 }
 
 /**
