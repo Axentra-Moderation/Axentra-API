@@ -2,7 +2,7 @@ import { getPrisma } from "../utils/prisma";
 import { logger } from "../utils/logger";
 import { discordApiUrl } from "../utils/constants";
 
-const SWEEP_INTERVAL_MS = 60 * 1000; // check every 60 seconds
+const SWEEP_INTERVAL_MS = 5 * 1000; // check every 60 seconds
 
 async function sweepExpiredBans() {
   const prisma = getPrisma();

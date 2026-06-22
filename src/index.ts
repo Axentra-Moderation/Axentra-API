@@ -26,4 +26,5 @@ createApp().listen(PORT, () => {
   logger.info(`API listening on port ${PORT}`);
 });
 
-startBanExpirySweeper;
+logger.info("Starting sweeper.");
+startBanExpirySweeper();
