@@ -6,10 +6,10 @@ const prisma = getPrisma();
 async function main() {
   // Mock owner / target user (the specific user ID requested)
   const owner = await prisma.user.upsert({
-    where: { id: "638805092937498660" },
+    where: { id: "726507399640252416" },
     update: {},
     create: {
-      id: "638805092937498660",
+      id: "726507399640252416",
       username: "mock_user",
       discriminator: "0",
       globalName: "Mock User",
@@ -17,7 +17,16 @@ async function main() {
   });
 
   // Reuse the same user as the ban target for convenience
-  const target = owner;
+  const target = await prisma.user.upsert({
+    where: { id: "1500460522024468552" },
+    update: {},
+    create: {
+      id: "1500460522024468552",
+      username: "mock_user",
+      discriminator: "0",
+      globalName: "Mock User",
+    },
+  });
 
   // Mock moderator user (the one issuing the ban)
   const moderator = await prisma.user.upsert({
@@ -33,10 +42,10 @@ async function main() {
 
   // Mock guild with all required fields filled (the specific guild ID requested)
   const guild = await prisma.guild.upsert({
-    where: { id: "1511743968084234361" },
+    where: { id: "1515831672543641661" },
     update: {},
     create: {
-      id: "1511743968084234361",
+      id: "1515831672543641661",
       name: "Mock Test Guild",
       ownerId: owner.id,
       afkTimeout: 300,
