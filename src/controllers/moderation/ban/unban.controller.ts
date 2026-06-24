@@ -1,7 +1,7 @@
 import { type Request, type Response } from "express";
-import { logger } from "../../utils/logger";
-import { getPrisma } from "../../utils/prisma";
-import { discordApiUrl } from "../../utils/constants";
+import { logger } from "../../../utils/logger";
+import { getPrisma } from "../../../utils/prisma";
+import { discordApiUrl } from "../../../utils/constants";
 
 export const unbanUser = async (req: Request, res: Response) => {
   const guildId = req.params["guildId"] as string;

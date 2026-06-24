@@ -1,8 +1,8 @@
 import { type Request, type Response } from "express";
-import { logger } from "../../utils/logger";
-import { getPrisma } from "../../utils/prisma";
-import { discordApiUrl } from "../../utils/constants";
-import { parseDuration, InvalidDurationError } from "../../utils/duration";
+import { logger } from "../../../utils/logger";
+import { getPrisma } from "../../../utils/prisma";
+import { discordApiUrl } from "../../../utils/constants";
+import { parseDuration, InvalidDurationError } from "../../../utils/duration";
 
 export const kickUser = async (req: Request, res: Response) => {
   const guildId = req.params["guildId"] as string;
