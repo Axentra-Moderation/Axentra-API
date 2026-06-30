@@ -553,6 +553,7 @@ export type GuildWhereInput = {
   members?: Prisma.GuildMemberListRelationFilter
   bans?: Prisma.BanListRelationFilter
   logs?: Prisma.LogListRelationFilter
+  messages?: Prisma.MessageListRelationFilter
 }
 
 export type GuildOrderByWithRelationInput = {
@@ -605,6 +606,7 @@ export type GuildOrderByWithRelationInput = {
   members?: Prisma.GuildMemberOrderByRelationAggregateInput
   bans?: Prisma.BanOrderByRelationAggregateInput
   logs?: Prisma.LogOrderByRelationAggregateInput
+  messages?: Prisma.MessageOrderByRelationAggregateInput
 }
 
 export type GuildWhereUniqueInput = Prisma.AtLeast<{
@@ -660,6 +662,7 @@ export type GuildWhereUniqueInput = Prisma.AtLeast<{
   members?: Prisma.GuildMemberListRelationFilter
   bans?: Prisma.BanListRelationFilter
   logs?: Prisma.LogListRelationFilter
+  messages?: Prisma.MessageListRelationFilter
 }, "id">
 
 export type GuildOrderByWithAggregationInput = {
@@ -805,6 +808,7 @@ export type GuildCreateInput = {
   members?: Prisma.GuildMemberCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageCreateNestedManyWithoutGuildInput
 }
 
 export type GuildUncheckedCreateInput = {
@@ -856,6 +860,7 @@ export type GuildUncheckedCreateInput = {
   members?: Prisma.GuildMemberUncheckedCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanUncheckedCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutGuildInput
 }
 
 export type GuildUpdateInput = {
@@ -907,6 +912,7 @@ export type GuildUpdateInput = {
   members?: Prisma.GuildMemberUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateInput = {
@@ -958,6 +964,7 @@ export type GuildUncheckedUpdateInput = {
   members?: Prisma.GuildMemberUncheckedUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUncheckedUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUncheckedUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildCreateManyInput = {
@@ -1454,6 +1461,22 @@ export type GuildUpdateOneRequiredWithoutLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.GuildUpdateToOneWithWhereWithoutLogsInput, Prisma.GuildUpdateWithoutLogsInput>, Prisma.GuildUncheckedUpdateWithoutLogsInput>
 }
 
+export type GuildCreateNestedOneWithoutMessagesInput = {
+  create?: Prisma.XOR<Prisma.GuildCreateWithoutMessagesInput, Prisma.GuildUncheckedCreateWithoutMessagesInput>
+  connectOrCreate?: Prisma.GuildCreateOrConnectWithoutMessagesInput
+  connect?: Prisma.GuildWhereUniqueInput
+}
+
+export type GuildUpdateOneWithoutMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.GuildCreateWithoutMessagesInput, Prisma.GuildUncheckedCreateWithoutMessagesInput>
+  connectOrCreate?: Prisma.GuildCreateOrConnectWithoutMessagesInput
+  upsert?: Prisma.GuildUpsertWithoutMessagesInput
+  disconnect?: Prisma.GuildWhereInput | boolean
+  delete?: Prisma.GuildWhereInput | boolean
+  connect?: Prisma.GuildWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.GuildUpdateToOneWithWhereWithoutMessagesInput, Prisma.GuildUpdateWithoutMessagesInput>, Prisma.GuildUncheckedUpdateWithoutMessagesInput>
+}
+
 export type GuildCreateWithoutOwnerInput = {
   id: string
   name: string
@@ -1502,6 +1525,7 @@ export type GuildCreateWithoutOwnerInput = {
   members?: Prisma.GuildMemberCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageCreateNestedManyWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutOwnerInput = {
@@ -1552,6 +1576,7 @@ export type GuildUncheckedCreateWithoutOwnerInput = {
   members?: Prisma.GuildMemberUncheckedCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanUncheckedCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutOwnerInput = {
@@ -1674,6 +1699,7 @@ export type GuildCreateWithoutWelcomeScreenInput = {
   members?: Prisma.GuildMemberCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageCreateNestedManyWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutWelcomeScreenInput = {
@@ -1724,6 +1750,7 @@ export type GuildUncheckedCreateWithoutWelcomeScreenInput = {
   members?: Prisma.GuildMemberUncheckedCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanUncheckedCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutWelcomeScreenInput = {
@@ -1790,6 +1817,7 @@ export type GuildUpdateWithoutWelcomeScreenInput = {
   members?: Prisma.GuildMemberUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutWelcomeScreenInput = {
@@ -1840,6 +1868,7 @@ export type GuildUncheckedUpdateWithoutWelcomeScreenInput = {
   members?: Prisma.GuildMemberUncheckedUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUncheckedUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUncheckedUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildCreateWithoutIncidentsDataInput = {
@@ -1890,6 +1919,7 @@ export type GuildCreateWithoutIncidentsDataInput = {
   members?: Prisma.GuildMemberCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageCreateNestedManyWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutIncidentsDataInput = {
@@ -1940,6 +1970,7 @@ export type GuildUncheckedCreateWithoutIncidentsDataInput = {
   members?: Prisma.GuildMemberUncheckedCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanUncheckedCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutIncidentsDataInput = {
@@ -2006,6 +2037,7 @@ export type GuildUpdateWithoutIncidentsDataInput = {
   members?: Prisma.GuildMemberUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutIncidentsDataInput = {
@@ -2056,6 +2088,7 @@ export type GuildUncheckedUpdateWithoutIncidentsDataInput = {
   members?: Prisma.GuildMemberUncheckedUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUncheckedUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUncheckedUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildCreateWithoutRolesInput = {
@@ -2106,6 +2139,7 @@ export type GuildCreateWithoutRolesInput = {
   members?: Prisma.GuildMemberCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageCreateNestedManyWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutRolesInput = {
@@ -2156,6 +2190,7 @@ export type GuildUncheckedCreateWithoutRolesInput = {
   members?: Prisma.GuildMemberUncheckedCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanUncheckedCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutRolesInput = {
@@ -2222,6 +2257,7 @@ export type GuildUpdateWithoutRolesInput = {
   members?: Prisma.GuildMemberUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutRolesInput = {
@@ -2272,6 +2308,7 @@ export type GuildUncheckedUpdateWithoutRolesInput = {
   members?: Prisma.GuildMemberUncheckedUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUncheckedUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUncheckedUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildCreateWithoutEmojisInput = {
@@ -2322,6 +2359,7 @@ export type GuildCreateWithoutEmojisInput = {
   members?: Prisma.GuildMemberCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageCreateNestedManyWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutEmojisInput = {
@@ -2372,6 +2410,7 @@ export type GuildUncheckedCreateWithoutEmojisInput = {
   members?: Prisma.GuildMemberUncheckedCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanUncheckedCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutEmojisInput = {
@@ -2438,6 +2477,7 @@ export type GuildUpdateWithoutEmojisInput = {
   members?: Prisma.GuildMemberUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutEmojisInput = {
@@ -2488,6 +2528,7 @@ export type GuildUncheckedUpdateWithoutEmojisInput = {
   members?: Prisma.GuildMemberUncheckedUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUncheckedUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUncheckedUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildCreateWithoutStickersInput = {
@@ -2538,6 +2579,7 @@ export type GuildCreateWithoutStickersInput = {
   members?: Prisma.GuildMemberCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageCreateNestedManyWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutStickersInput = {
@@ -2588,6 +2630,7 @@ export type GuildUncheckedCreateWithoutStickersInput = {
   members?: Prisma.GuildMemberUncheckedCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanUncheckedCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutStickersInput = {
@@ -2654,6 +2697,7 @@ export type GuildUpdateWithoutStickersInput = {
   members?: Prisma.GuildMemberUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutStickersInput = {
@@ -2704,6 +2748,7 @@ export type GuildUncheckedUpdateWithoutStickersInput = {
   members?: Prisma.GuildMemberUncheckedUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUncheckedUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUncheckedUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildCreateWithoutMembersInput = {
@@ -2754,6 +2799,7 @@ export type GuildCreateWithoutMembersInput = {
   stickers?: Prisma.StickerCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageCreateNestedManyWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutMembersInput = {
@@ -2804,6 +2850,7 @@ export type GuildUncheckedCreateWithoutMembersInput = {
   stickers?: Prisma.StickerUncheckedCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanUncheckedCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutMembersInput = {
@@ -2870,6 +2917,7 @@ export type GuildUpdateWithoutMembersInput = {
   stickers?: Prisma.StickerUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutMembersInput = {
@@ -2920,6 +2968,7 @@ export type GuildUncheckedUpdateWithoutMembersInput = {
   stickers?: Prisma.StickerUncheckedUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUncheckedUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUncheckedUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildCreateWithoutBansInput = {
@@ -2970,6 +3019,7 @@ export type GuildCreateWithoutBansInput = {
   stickers?: Prisma.StickerCreateNestedManyWithoutGuildInput
   members?: Prisma.GuildMemberCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageCreateNestedManyWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutBansInput = {
@@ -3020,6 +3070,7 @@ export type GuildUncheckedCreateWithoutBansInput = {
   stickers?: Prisma.StickerUncheckedCreateNestedManyWithoutGuildInput
   members?: Prisma.GuildMemberUncheckedCreateNestedManyWithoutGuildInput
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutBansInput = {
@@ -3086,6 +3137,7 @@ export type GuildUpdateWithoutBansInput = {
   stickers?: Prisma.StickerUpdateManyWithoutGuildNestedInput
   members?: Prisma.GuildMemberUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutBansInput = {
@@ -3136,6 +3188,7 @@ export type GuildUncheckedUpdateWithoutBansInput = {
   stickers?: Prisma.StickerUncheckedUpdateManyWithoutGuildNestedInput
   members?: Prisma.GuildMemberUncheckedUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUncheckedUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildCreateWithoutLogsInput = {
@@ -3186,6 +3239,7 @@ export type GuildCreateWithoutLogsInput = {
   stickers?: Prisma.StickerCreateNestedManyWithoutGuildInput
   members?: Prisma.GuildMemberCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageCreateNestedManyWithoutGuildInput
 }
 
 export type GuildUncheckedCreateWithoutLogsInput = {
@@ -3236,6 +3290,7 @@ export type GuildUncheckedCreateWithoutLogsInput = {
   stickers?: Prisma.StickerUncheckedCreateNestedManyWithoutGuildInput
   members?: Prisma.GuildMemberUncheckedCreateNestedManyWithoutGuildInput
   bans?: Prisma.BanUncheckedCreateNestedManyWithoutGuildInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutGuildInput
 }
 
 export type GuildCreateOrConnectWithoutLogsInput = {
@@ -3302,6 +3357,7 @@ export type GuildUpdateWithoutLogsInput = {
   stickers?: Prisma.StickerUpdateManyWithoutGuildNestedInput
   members?: Prisma.GuildMemberUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutLogsInput = {
@@ -3352,6 +3408,227 @@ export type GuildUncheckedUpdateWithoutLogsInput = {
   stickers?: Prisma.StickerUncheckedUpdateManyWithoutGuildNestedInput
   members?: Prisma.GuildMemberUncheckedUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUncheckedUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutGuildNestedInput
+}
+
+export type GuildCreateWithoutMessagesInput = {
+  id: string
+  name: string
+  icon?: string | null
+  iconHash?: string | null
+  splash?: string | null
+  discoverySplash?: string | null
+  region?: string | null
+  afkChannelId?: string | null
+  afkTimeout: number
+  widgetEnabled?: boolean | null
+  widgetChannelId?: string | null
+  verificationLevel: number
+  defaultMessageNotifications: number
+  explicitContentFilter: number
+  mfaLevel: number
+  applicationId?: string | null
+  systemChannelId?: string | null
+  systemChannelFlags: number
+  rulesChannelId?: string | null
+  maxPresences?: number | null
+  maxMembers?: number | null
+  vanityUrlCode?: string | null
+  description?: string | null
+  banner?: string | null
+  premiumTier: number
+  premiumSubscriptionCount?: number | null
+  preferredLocale?: string
+  publicUpdatesChannelId?: string | null
+  maxVideoChannelUsers?: number | null
+  maxStageVideoChannelUsers?: number | null
+  approximateMemberCount?: number | null
+  approximatePresenceCount?: number | null
+  nsfwLevel: number
+  premiumProgressBarEnabled: boolean
+  safetyAlertsChannelId?: string | null
+  features?: Prisma.GuildCreatefeaturesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  settings: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  owner: Prisma.UserCreateNestedOneWithoutOwnedGuildsInput
+  welcomeScreen?: Prisma.WelcomeScreenCreateNestedOneWithoutGuildInput
+  incidentsData?: Prisma.IncidentsDataCreateNestedOneWithoutGuildInput
+  roles?: Prisma.RoleCreateNestedManyWithoutGuildInput
+  emojis?: Prisma.EmojiCreateNestedManyWithoutGuildInput
+  stickers?: Prisma.StickerCreateNestedManyWithoutGuildInput
+  members?: Prisma.GuildMemberCreateNestedManyWithoutGuildInput
+  bans?: Prisma.BanCreateNestedManyWithoutGuildInput
+  logs?: Prisma.LogCreateNestedManyWithoutGuildInput
+}
+
+export type GuildUncheckedCreateWithoutMessagesInput = {
+  id: string
+  name: string
+  icon?: string | null
+  iconHash?: string | null
+  splash?: string | null
+  discoverySplash?: string | null
+  ownerId: string
+  region?: string | null
+  afkChannelId?: string | null
+  afkTimeout: number
+  widgetEnabled?: boolean | null
+  widgetChannelId?: string | null
+  verificationLevel: number
+  defaultMessageNotifications: number
+  explicitContentFilter: number
+  mfaLevel: number
+  applicationId?: string | null
+  systemChannelId?: string | null
+  systemChannelFlags: number
+  rulesChannelId?: string | null
+  maxPresences?: number | null
+  maxMembers?: number | null
+  vanityUrlCode?: string | null
+  description?: string | null
+  banner?: string | null
+  premiumTier: number
+  premiumSubscriptionCount?: number | null
+  preferredLocale?: string
+  publicUpdatesChannelId?: string | null
+  maxVideoChannelUsers?: number | null
+  maxStageVideoChannelUsers?: number | null
+  approximateMemberCount?: number | null
+  approximatePresenceCount?: number | null
+  nsfwLevel: number
+  premiumProgressBarEnabled: boolean
+  safetyAlertsChannelId?: string | null
+  features?: Prisma.GuildCreatefeaturesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  settings: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  welcomeScreen?: Prisma.WelcomeScreenUncheckedCreateNestedOneWithoutGuildInput
+  incidentsData?: Prisma.IncidentsDataUncheckedCreateNestedOneWithoutGuildInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutGuildInput
+  emojis?: Prisma.EmojiUncheckedCreateNestedManyWithoutGuildInput
+  stickers?: Prisma.StickerUncheckedCreateNestedManyWithoutGuildInput
+  members?: Prisma.GuildMemberUncheckedCreateNestedManyWithoutGuildInput
+  bans?: Prisma.BanUncheckedCreateNestedManyWithoutGuildInput
+  logs?: Prisma.LogUncheckedCreateNestedManyWithoutGuildInput
+}
+
+export type GuildCreateOrConnectWithoutMessagesInput = {
+  where: Prisma.GuildWhereUniqueInput
+  create: Prisma.XOR<Prisma.GuildCreateWithoutMessagesInput, Prisma.GuildUncheckedCreateWithoutMessagesInput>
+}
+
+export type GuildUpsertWithoutMessagesInput = {
+  update: Prisma.XOR<Prisma.GuildUpdateWithoutMessagesInput, Prisma.GuildUncheckedUpdateWithoutMessagesInput>
+  create: Prisma.XOR<Prisma.GuildCreateWithoutMessagesInput, Prisma.GuildUncheckedCreateWithoutMessagesInput>
+  where?: Prisma.GuildWhereInput
+}
+
+export type GuildUpdateToOneWithWhereWithoutMessagesInput = {
+  where?: Prisma.GuildWhereInput
+  data: Prisma.XOR<Prisma.GuildUpdateWithoutMessagesInput, Prisma.GuildUncheckedUpdateWithoutMessagesInput>
+}
+
+export type GuildUpdateWithoutMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iconHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  splash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discoverySplash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  afkChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  afkTimeout?: Prisma.IntFieldUpdateOperationsInput | number
+  widgetEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  widgetChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  defaultMessageNotifications?: Prisma.IntFieldUpdateOperationsInput | number
+  explicitContentFilter?: Prisma.IntFieldUpdateOperationsInput | number
+  mfaLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  applicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemChannelFlags?: Prisma.IntFieldUpdateOperationsInput | number
+  rulesChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxPresences?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vanityUrlCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banner?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  premiumTier?: Prisma.IntFieldUpdateOperationsInput | number
+  premiumSubscriptionCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  preferredLocale?: Prisma.StringFieldUpdateOperationsInput | string
+  publicUpdatesChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxVideoChannelUsers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxStageVideoChannelUsers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  approximateMemberCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  approximatePresenceCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nsfwLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  premiumProgressBarEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  safetyAlertsChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  features?: Prisma.GuildUpdatefeaturesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  owner?: Prisma.UserUpdateOneRequiredWithoutOwnedGuildsNestedInput
+  welcomeScreen?: Prisma.WelcomeScreenUpdateOneWithoutGuildNestedInput
+  incidentsData?: Prisma.IncidentsDataUpdateOneWithoutGuildNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutGuildNestedInput
+  emojis?: Prisma.EmojiUpdateManyWithoutGuildNestedInput
+  stickers?: Prisma.StickerUpdateManyWithoutGuildNestedInput
+  members?: Prisma.GuildMemberUpdateManyWithoutGuildNestedInput
+  bans?: Prisma.BanUpdateManyWithoutGuildNestedInput
+  logs?: Prisma.LogUpdateManyWithoutGuildNestedInput
+}
+
+export type GuildUncheckedUpdateWithoutMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iconHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  splash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discoverySplash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  afkChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  afkTimeout?: Prisma.IntFieldUpdateOperationsInput | number
+  widgetEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  widgetChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  defaultMessageNotifications?: Prisma.IntFieldUpdateOperationsInput | number
+  explicitContentFilter?: Prisma.IntFieldUpdateOperationsInput | number
+  mfaLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  applicationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemChannelFlags?: Prisma.IntFieldUpdateOperationsInput | number
+  rulesChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxPresences?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxMembers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vanityUrlCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banner?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  premiumTier?: Prisma.IntFieldUpdateOperationsInput | number
+  premiumSubscriptionCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  preferredLocale?: Prisma.StringFieldUpdateOperationsInput | string
+  publicUpdatesChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxVideoChannelUsers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxStageVideoChannelUsers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  approximateMemberCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  approximatePresenceCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nsfwLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  premiumProgressBarEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  safetyAlertsChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  features?: Prisma.GuildUpdatefeaturesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  settings?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  welcomeScreen?: Prisma.WelcomeScreenUncheckedUpdateOneWithoutGuildNestedInput
+  incidentsData?: Prisma.IncidentsDataUncheckedUpdateOneWithoutGuildNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutGuildNestedInput
+  emojis?: Prisma.EmojiUncheckedUpdateManyWithoutGuildNestedInput
+  stickers?: Prisma.StickerUncheckedUpdateManyWithoutGuildNestedInput
+  members?: Prisma.GuildMemberUncheckedUpdateManyWithoutGuildNestedInput
+  bans?: Prisma.BanUncheckedUpdateManyWithoutGuildNestedInput
+  logs?: Prisma.LogUncheckedUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildCreateManyOwnerInput = {
@@ -3444,6 +3721,7 @@ export type GuildUpdateWithoutOwnerInput = {
   members?: Prisma.GuildMemberUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateWithoutOwnerInput = {
@@ -3494,6 +3772,7 @@ export type GuildUncheckedUpdateWithoutOwnerInput = {
   members?: Prisma.GuildMemberUncheckedUpdateManyWithoutGuildNestedInput
   bans?: Prisma.BanUncheckedUpdateManyWithoutGuildNestedInput
   logs?: Prisma.LogUncheckedUpdateManyWithoutGuildNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutGuildNestedInput
 }
 
 export type GuildUncheckedUpdateManyWithoutOwnerInput = {
@@ -3550,6 +3829,7 @@ export type GuildCountOutputType = {
   members: number
   bans: number
   logs: number
+  messages: number
 }
 
 export type GuildCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3559,6 +3839,7 @@ export type GuildCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   members?: boolean | GuildCountOutputTypeCountMembersArgs
   bans?: boolean | GuildCountOutputTypeCountBansArgs
   logs?: boolean | GuildCountOutputTypeCountLogsArgs
+  messages?: boolean | GuildCountOutputTypeCountMessagesArgs
 }
 
 /**
@@ -3613,6 +3894,13 @@ export type GuildCountOutputTypeCountLogsArgs<ExtArgs extends runtime.Types.Exte
   where?: Prisma.LogWhereInput
 }
 
+/**
+ * GuildCountOutputType without action
+ */
+export type GuildCountOutputTypeCountMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MessageWhereInput
+}
+
 
 export type GuildSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3664,6 +3952,7 @@ export type GuildSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   members?: boolean | Prisma.Guild$membersArgs<ExtArgs>
   bans?: boolean | Prisma.Guild$bansArgs<ExtArgs>
   logs?: boolean | Prisma.Guild$logsArgs<ExtArgs>
+  messages?: boolean | Prisma.Guild$messagesArgs<ExtArgs>
   _count?: boolean | Prisma.GuildCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["guild"]>
 
@@ -3809,6 +4098,7 @@ export type GuildInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   members?: boolean | Prisma.Guild$membersArgs<ExtArgs>
   bans?: boolean | Prisma.Guild$bansArgs<ExtArgs>
   logs?: boolean | Prisma.Guild$logsArgs<ExtArgs>
+  messages?: boolean | Prisma.Guild$messagesArgs<ExtArgs>
   _count?: boolean | Prisma.GuildCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type GuildIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3830,6 +4120,7 @@ export type $GuildPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     members: Prisma.$GuildMemberPayload<ExtArgs>[]
     bans: Prisma.$BanPayload<ExtArgs>[]
     logs: Prisma.$LogPayload<ExtArgs>[]
+    messages: Prisma.$MessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -4275,6 +4566,7 @@ export interface Prisma__GuildClient<T, Null = never, ExtArgs extends runtime.Ty
   members<T extends Prisma.Guild$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guild$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GuildMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bans<T extends Prisma.Guild$bansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guild$bansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   logs<T extends Prisma.Guild$logsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guild$logsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  messages<T extends Prisma.Guild$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Guild$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4924,6 +5216,30 @@ export type Guild$logsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.LogScalarFieldEnum | Prisma.LogScalarFieldEnum[]
+}
+
+/**
+ * Guild.messages
+ */
+export type Guild$messagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Message
+   */
+  select?: Prisma.MessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Message
+   */
+  omit?: Prisma.MessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
+  where?: Prisma.MessageWhereInput
+  orderBy?: Prisma.MessageOrderByWithRelationInput | Prisma.MessageOrderByWithRelationInput[]
+  cursor?: Prisma.MessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
 }
 
 /**

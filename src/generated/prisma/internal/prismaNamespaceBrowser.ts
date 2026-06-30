@@ -66,7 +66,18 @@ export const ModelName = {
   Sticker: 'Sticker',
   GuildMember: 'GuildMember',
   Ban: 'Ban',
-  Log: 'Log'
+  Log: 'Log',
+  Message: 'Message',
+  MessageMention: 'MessageMention',
+  MessageAttachment: 'MessageAttachment',
+  MessageEmbed: 'MessageEmbed',
+  MessageEmbedFooter: 'MessageEmbedFooter',
+  MessageEmbedMedia: 'MessageEmbedMedia',
+  MessageEmbedProvider: 'MessageEmbedProvider',
+  MessageEmbedAuthor: 'MessageEmbedAuthor',
+  MessageEmbedField: 'MessageEmbedField',
+  MessageReaction: 'MessageReaction',
+  MessageReference: 'MessageReference'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -369,6 +380,174 @@ export const LogScalarFieldEnum = {
 } as const
 
 export type LogScalarFieldEnum = (typeof LogScalarFieldEnum)[keyof typeof LogScalarFieldEnum]
+
+
+export const MessageScalarFieldEnum = {
+  id: 'id',
+  channelId: 'channelId',
+  authorId: 'authorId',
+  guildId: 'guildId',
+  content: 'content',
+  timestamp: 'timestamp',
+  editedTimestamp: 'editedTimestamp',
+  tts: 'tts',
+  mentionEveryone: 'mentionEveryone',
+  mentionRoleIds: 'mentionRoleIds',
+  nonce: 'nonce',
+  pinned: 'pinned',
+  webhookId: 'webhookId',
+  type: 'type',
+  flags: 'flags',
+  applicationId: 'applicationId',
+  messageSnapshots: 'messageSnapshots',
+  interactionMetadata: 'interactionMetadata',
+  roleSubscriptionData: 'roleSubscriptionData',
+  sharedClientTheme: 'sharedClientTheme',
+  call: 'call',
+  resolved: 'resolved',
+  position: 'position',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const MessageMentionScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  userId: 'userId'
+} as const
+
+export type MessageMentionScalarFieldEnum = (typeof MessageMentionScalarFieldEnum)[keyof typeof MessageMentionScalarFieldEnum]
+
+
+export const MessageAttachmentScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  filename: 'filename',
+  title: 'title',
+  description: 'description',
+  contentType: 'contentType',
+  size: 'size',
+  url: 'url',
+  proxyUrl: 'proxyUrl',
+  height: 'height',
+  width: 'width',
+  ephemeral: 'ephemeral',
+  durationSecs: 'durationSecs',
+  waveform: 'waveform',
+  flags: 'flags'
+} as const
+
+export type MessageAttachmentScalarFieldEnum = (typeof MessageAttachmentScalarFieldEnum)[keyof typeof MessageAttachmentScalarFieldEnum]
+
+
+export const MessageEmbedScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  title: 'title',
+  type: 'type',
+  description: 'description',
+  url: 'url',
+  timestamp: 'timestamp',
+  color: 'color',
+  flags: 'flags'
+} as const
+
+export type MessageEmbedScalarFieldEnum = (typeof MessageEmbedScalarFieldEnum)[keyof typeof MessageEmbedScalarFieldEnum]
+
+
+export const MessageEmbedFooterScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  iconUrl: 'iconUrl',
+  proxyIconUrl: 'proxyIconUrl',
+  embedId: 'embedId'
+} as const
+
+export type MessageEmbedFooterScalarFieldEnum = (typeof MessageEmbedFooterScalarFieldEnum)[keyof typeof MessageEmbedFooterScalarFieldEnum]
+
+
+export const MessageEmbedMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  proxyUrl: 'proxyUrl',
+  height: 'height',
+  width: 'width',
+  contentType: 'contentType',
+  placeholder: 'placeholder',
+  placeholderVersion: 'placeholderVersion',
+  description: 'description',
+  flags: 'flags',
+  embedAsImageId: 'embedAsImageId',
+  embedAsThumbnailId: 'embedAsThumbnailId',
+  embedAsVideoId: 'embedAsVideoId'
+} as const
+
+export type MessageEmbedMediaScalarFieldEnum = (typeof MessageEmbedMediaScalarFieldEnum)[keyof typeof MessageEmbedMediaScalarFieldEnum]
+
+
+export const MessageEmbedProviderScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  url: 'url',
+  embedId: 'embedId'
+} as const
+
+export type MessageEmbedProviderScalarFieldEnum = (typeof MessageEmbedProviderScalarFieldEnum)[keyof typeof MessageEmbedProviderScalarFieldEnum]
+
+
+export const MessageEmbedAuthorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  url: 'url',
+  iconUrl: 'iconUrl',
+  proxyIconUrl: 'proxyIconUrl',
+  embedId: 'embedId'
+} as const
+
+export type MessageEmbedAuthorScalarFieldEnum = (typeof MessageEmbedAuthorScalarFieldEnum)[keyof typeof MessageEmbedAuthorScalarFieldEnum]
+
+
+export const MessageEmbedFieldScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  value: 'value',
+  inline: 'inline',
+  embedId: 'embedId'
+} as const
+
+export type MessageEmbedFieldScalarFieldEnum = (typeof MessageEmbedFieldScalarFieldEnum)[keyof typeof MessageEmbedFieldScalarFieldEnum]
+
+
+export const MessageReactionScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  count: 'count',
+  countBurst: 'countBurst',
+  countNormal: 'countNormal',
+  me: 'me',
+  meBurst: 'meBurst',
+  emojiId: 'emojiId',
+  emojiName: 'emojiName',
+  burstColors: 'burstColors'
+} as const
+
+export type MessageReactionScalarFieldEnum = (typeof MessageReactionScalarFieldEnum)[keyof typeof MessageReactionScalarFieldEnum]
+
+
+export const MessageReferenceScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  type: 'type',
+  referencedMessageId: 'referencedMessageId',
+  channelId: 'channelId',
+  guildId: 'guildId',
+  failIfNotExists: 'failIfNotExists'
+} as const
+
+export type MessageReferenceScalarFieldEnum = (typeof MessageReferenceScalarFieldEnum)[keyof typeof MessageReferenceScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -97,3 +97,58 @@ export type Ban = Prisma.BanModel
  * 
  */
 export type Log = Prisma.LogModel
+/**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel
+/**
+ * Model MessageMention
+ * 
+ */
+export type MessageMention = Prisma.MessageMentionModel
+/**
+ * Model MessageAttachment
+ * 
+ */
+export type MessageAttachment = Prisma.MessageAttachmentModel
+/**
+ * Model MessageEmbed
+ * 
+ */
+export type MessageEmbed = Prisma.MessageEmbedModel
+/**
+ * Model MessageEmbedFooter
+ * 
+ */
+export type MessageEmbedFooter = Prisma.MessageEmbedFooterModel
+/**
+ * Model MessageEmbedMedia
+ * 
+ */
+export type MessageEmbedMedia = Prisma.MessageEmbedMediaModel
+/**
+ * Model MessageEmbedProvider
+ * 
+ */
+export type MessageEmbedProvider = Prisma.MessageEmbedProviderModel
+/**
+ * Model MessageEmbedAuthor
+ * 
+ */
+export type MessageEmbedAuthor = Prisma.MessageEmbedAuthorModel
+/**
+ * Model MessageEmbedField
+ * 
+ */
+export type MessageEmbedField = Prisma.MessageEmbedFieldModel
+/**
+ * Model MessageReaction
+ * 
+ */
+export type MessageReaction = Prisma.MessageReactionModel
+/**
+ * Model MessageReference
+ * 
+ */
+export type MessageReference = Prisma.MessageReferenceModel

@@ -347,7 +347,7 @@ export type BanCreateInput = {
   user: Prisma.UserCreateNestedOneWithoutBansReceivedInput
   moderator: Prisma.UserCreateNestedOneWithoutBansIssuedInput
   member?: Prisma.GuildMemberCreateNestedOneWithoutBansInput
-  logs?: Prisma.LogCreateNestedManyWithoutReferencesInput
+  logs?: Prisma.LogCreateNestedManyWithoutBanInput
 }
 
 export type BanUncheckedCreateInput = {
@@ -361,7 +361,7 @@ export type BanUncheckedCreateInput = {
   duration?: number | null
   expiresAt?: Date | string | null
   createdAt?: Date | string
-  logs?: Prisma.LogUncheckedCreateNestedManyWithoutReferencesInput
+  logs?: Prisma.LogUncheckedCreateNestedManyWithoutBanInput
 }
 
 export type BanUpdateInput = {
@@ -375,7 +375,7 @@ export type BanUpdateInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutBansReceivedNestedInput
   moderator?: Prisma.UserUpdateOneRequiredWithoutBansIssuedNestedInput
   member?: Prisma.GuildMemberUpdateOneWithoutBansNestedInput
-  logs?: Prisma.LogUpdateManyWithoutReferencesNestedInput
+  logs?: Prisma.LogUpdateManyWithoutBanNestedInput
 }
 
 export type BanUncheckedUpdateInput = {
@@ -389,7 +389,7 @@ export type BanUncheckedUpdateInput = {
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.LogUncheckedUpdateManyWithoutReferencesNestedInput
+  logs?: Prisma.LogUncheckedUpdateManyWithoutBanNestedInput
 }
 
 export type BanCreateManyInput = {
@@ -683,7 +683,7 @@ export type BanCreateWithoutUserInput = {
   guild: Prisma.GuildCreateNestedOneWithoutBansInput
   moderator: Prisma.UserCreateNestedOneWithoutBansIssuedInput
   member?: Prisma.GuildMemberCreateNestedOneWithoutBansInput
-  logs?: Prisma.LogCreateNestedManyWithoutReferencesInput
+  logs?: Prisma.LogCreateNestedManyWithoutBanInput
 }
 
 export type BanUncheckedCreateWithoutUserInput = {
@@ -696,7 +696,7 @@ export type BanUncheckedCreateWithoutUserInput = {
   duration?: number | null
   expiresAt?: Date | string | null
   createdAt?: Date | string
-  logs?: Prisma.LogUncheckedCreateNestedManyWithoutReferencesInput
+  logs?: Prisma.LogUncheckedCreateNestedManyWithoutBanInput
 }
 
 export type BanCreateOrConnectWithoutUserInput = {
@@ -719,7 +719,7 @@ export type BanCreateWithoutModeratorInput = {
   guild: Prisma.GuildCreateNestedOneWithoutBansInput
   user: Prisma.UserCreateNestedOneWithoutBansReceivedInput
   member?: Prisma.GuildMemberCreateNestedOneWithoutBansInput
-  logs?: Prisma.LogCreateNestedManyWithoutReferencesInput
+  logs?: Prisma.LogCreateNestedManyWithoutBanInput
 }
 
 export type BanUncheckedCreateWithoutModeratorInput = {
@@ -732,7 +732,7 @@ export type BanUncheckedCreateWithoutModeratorInput = {
   duration?: number | null
   expiresAt?: Date | string | null
   createdAt?: Date | string
-  logs?: Prisma.LogUncheckedCreateNestedManyWithoutReferencesInput
+  logs?: Prisma.LogUncheckedCreateNestedManyWithoutBanInput
 }
 
 export type BanCreateOrConnectWithoutModeratorInput = {
@@ -803,7 +803,7 @@ export type BanCreateWithoutGuildInput = {
   user: Prisma.UserCreateNestedOneWithoutBansReceivedInput
   moderator: Prisma.UserCreateNestedOneWithoutBansIssuedInput
   member?: Prisma.GuildMemberCreateNestedOneWithoutBansInput
-  logs?: Prisma.LogCreateNestedManyWithoutReferencesInput
+  logs?: Prisma.LogCreateNestedManyWithoutBanInput
 }
 
 export type BanUncheckedCreateWithoutGuildInput = {
@@ -816,7 +816,7 @@ export type BanUncheckedCreateWithoutGuildInput = {
   duration?: number | null
   expiresAt?: Date | string | null
   createdAt?: Date | string
-  logs?: Prisma.LogUncheckedCreateNestedManyWithoutReferencesInput
+  logs?: Prisma.LogUncheckedCreateNestedManyWithoutBanInput
 }
 
 export type BanCreateOrConnectWithoutGuildInput = {
@@ -855,7 +855,7 @@ export type BanCreateWithoutMemberInput = {
   guild: Prisma.GuildCreateNestedOneWithoutBansInput
   user: Prisma.UserCreateNestedOneWithoutBansReceivedInput
   moderator: Prisma.UserCreateNestedOneWithoutBansIssuedInput
-  logs?: Prisma.LogCreateNestedManyWithoutReferencesInput
+  logs?: Prisma.LogCreateNestedManyWithoutBanInput
 }
 
 export type BanUncheckedCreateWithoutMemberInput = {
@@ -868,7 +868,7 @@ export type BanUncheckedCreateWithoutMemberInput = {
   duration?: number | null
   expiresAt?: Date | string | null
   createdAt?: Date | string
-  logs?: Prisma.LogUncheckedCreateNestedManyWithoutReferencesInput
+  logs?: Prisma.LogUncheckedCreateNestedManyWithoutBanInput
 }
 
 export type BanCreateOrConnectWithoutMemberInput = {
@@ -999,7 +999,7 @@ export type BanUpdateWithoutUserInput = {
   guild?: Prisma.GuildUpdateOneRequiredWithoutBansNestedInput
   moderator?: Prisma.UserUpdateOneRequiredWithoutBansIssuedNestedInput
   member?: Prisma.GuildMemberUpdateOneWithoutBansNestedInput
-  logs?: Prisma.LogUpdateManyWithoutReferencesNestedInput
+  logs?: Prisma.LogUpdateManyWithoutBanNestedInput
 }
 
 export type BanUncheckedUpdateWithoutUserInput = {
@@ -1012,7 +1012,7 @@ export type BanUncheckedUpdateWithoutUserInput = {
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.LogUncheckedUpdateManyWithoutReferencesNestedInput
+  logs?: Prisma.LogUncheckedUpdateManyWithoutBanNestedInput
 }
 
 export type BanUncheckedUpdateManyWithoutUserInput = {
@@ -1037,7 +1037,7 @@ export type BanUpdateWithoutModeratorInput = {
   guild?: Prisma.GuildUpdateOneRequiredWithoutBansNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutBansReceivedNestedInput
   member?: Prisma.GuildMemberUpdateOneWithoutBansNestedInput
-  logs?: Prisma.LogUpdateManyWithoutReferencesNestedInput
+  logs?: Prisma.LogUpdateManyWithoutBanNestedInput
 }
 
 export type BanUncheckedUpdateWithoutModeratorInput = {
@@ -1050,7 +1050,7 @@ export type BanUncheckedUpdateWithoutModeratorInput = {
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.LogUncheckedUpdateManyWithoutReferencesNestedInput
+  logs?: Prisma.LogUncheckedUpdateManyWithoutBanNestedInput
 }
 
 export type BanUncheckedUpdateManyWithoutModeratorInput = {
@@ -1087,7 +1087,7 @@ export type BanUpdateWithoutGuildInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutBansReceivedNestedInput
   moderator?: Prisma.UserUpdateOneRequiredWithoutBansIssuedNestedInput
   member?: Prisma.GuildMemberUpdateOneWithoutBansNestedInput
-  logs?: Prisma.LogUpdateManyWithoutReferencesNestedInput
+  logs?: Prisma.LogUpdateManyWithoutBanNestedInput
 }
 
 export type BanUncheckedUpdateWithoutGuildInput = {
@@ -1100,7 +1100,7 @@ export type BanUncheckedUpdateWithoutGuildInput = {
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.LogUncheckedUpdateManyWithoutReferencesNestedInput
+  logs?: Prisma.LogUncheckedUpdateManyWithoutBanNestedInput
 }
 
 export type BanUncheckedUpdateManyWithoutGuildInput = {
@@ -1137,7 +1137,7 @@ export type BanUpdateWithoutMemberInput = {
   guild?: Prisma.GuildUpdateOneRequiredWithoutBansNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutBansReceivedNestedInput
   moderator?: Prisma.UserUpdateOneRequiredWithoutBansIssuedNestedInput
-  logs?: Prisma.LogUpdateManyWithoutReferencesNestedInput
+  logs?: Prisma.LogUpdateManyWithoutBanNestedInput
 }
 
 export type BanUncheckedUpdateWithoutMemberInput = {
@@ -1150,7 +1150,7 @@ export type BanUncheckedUpdateWithoutMemberInput = {
   duration?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.LogUncheckedUpdateManyWithoutReferencesNestedInput
+  logs?: Prisma.LogUncheckedUpdateManyWithoutBanNestedInput
 }
 
 export type BanUncheckedUpdateManyWithoutMemberInput = {
