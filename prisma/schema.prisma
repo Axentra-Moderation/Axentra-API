@@ -59,6 +59,8 @@ model User {
   bansIssued       Ban[]         @relation("BanModerator")
   logsReceived     Log[]         @relation("LogTarget")
   logsIssued       Log[]         @relation("LogModerator")
+  messagesAuthored Message[]        @relation("MessageAuthor")
+  messageMentions  MessageMention[] @relation("MentionedUser")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -163,6 +165,7 @@ model Guild {
   members GuildMember[]
   bans    Ban[]
   logs    Log[]
+  messages Message[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -424,4 +427,300 @@ model Log {
   @@index([guildId, targetId])
   @@index([guildId, memberId])
   @@map("logs")
+}
+
+// =========================================
+// Message Object — https://docs.discord.com/developers/resources/message#message-object
+//
+// NOTE: `channelId` is a plain string, not a relation — this schema has no
+// `Channel` model yet. Add one and turn this into a real FK once channels
+// are modeled.
+//
+// Rarely-queried nested structures are stored as raw `Json?` rather than
+// full relational models, to avoid an explosion of one-off tables for data
+// you'll mostly just display as-is: `messageSnapshots`, `interactionMetadata`,
+// `roleSubscriptionData`, `sharedClientTheme`, `call`, `resolved`.
+// =========================================
+
+enum MessageType {
+  DEFAULT
+  RECIPIENT_ADD
+  RECIPIENT_REMOVE
+  CALL
+  CHANNEL_NAME_CHANGE
+  CHANNEL_ICON_CHANGE
+  CHANNEL_PINNED_MESSAGE
+  USER_JOIN
+  GUILD_BOOST
+  GUILD_BOOST_TIER_1
+  GUILD_BOOST_TIER_2
+  GUILD_BOOST_TIER_3
+  CHANNEL_FOLLOW_ADD
+  GUILD_DISCOVERY_DISQUALIFIED
+  GUILD_DISCOVERY_REQUALIFIED
+  GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING
+  GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING
+  THREAD_CREATED
+  REPLY
+  CHAT_INPUT_COMMAND
+  THREAD_STARTER_MESSAGE
+  GUILD_INVITE_REMINDER
+  CONTEXT_MENU_COMMAND
+  AUTO_MODERATION_ACTION
+  ROLE_SUBSCRIPTION_PURCHASE
+  INTERACTION_PREMIUM_UPSELL
+  STAGE_START
+  STAGE_END
+  STAGE_SPEAKER
+  STAGE_TOPIC
+  GUILD_APPLICATION_PREMIUM_SUBSCRIPTION
+  GUILD_INCIDENT_ALERT_MODE_ENABLED
+  GUILD_INCIDENT_ALERT_MODE_DISABLED
+  GUILD_INCIDENT_REPORT_RAID
+  GUILD_INCIDENT_REPORT_FALSE_ALARM
+  PURCHASE_NOTIFICATION
+  POLL_RESULT
+}
+
+model Message {
+  id        String  @id // snowflake
+  channelId String  @map("channel_id")
+
+  authorId String? @map("author_id")
+  author   User?   @relation("MessageAuthor", fields: [authorId], references: [id])
+
+  guildId String? @map("guild_id")
+  guild   Guild?  @relation(fields: [guildId], references: [id])
+
+  content         String?
+  timestamp       DateTime
+  editedTimestamp DateTime? @map("edited_timestamp")
+  tts             Boolean   @default(false)
+  mentionEveryone Boolean   @default(false) @map("mention_everyone")
+  mentionRoleIds  String[]  @map("mention_role_ids")
+
+  mentions       MessageMention[]
+  attachments    MessageAttachment[]
+  embeds         MessageEmbed[]
+  reactions      MessageReaction[]
+
+  nonce        String?
+  pinned       Boolean  @default(false)
+  webhookId    String?  @map("webhook_id")
+  type         MessageType
+  flags        Int?
+
+  applicationId String? @map("application_id")
+
+  messageReference MessageReference?
+
+  // Rarely-queried nested data — kept as raw JSON rather than full models.
+  messageSnapshots     Json? @map("message_snapshots")
+  interactionMetadata  Json? @map("interaction_metadata")
+  roleSubscriptionData Json? @map("role_subscription_data")
+  sharedClientTheme    Json? @map("shared_client_theme")
+  call                 Json?
+  resolved             Json?
+
+  position Int?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([guildId])
+  @@index([channelId])
+  @@index([authorId])
+  @@map("messages")
+}
+
+// =========================================
+// Message Mention (denormalized join — which users were @mentioned)
+// =========================================
+model MessageMention {
+  id String @id @default(uuid())
+
+  messageId String  @map("message_id")
+  message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  userId String @map("user_id")
+  user   User   @relation("MentionedUser", fields: [userId], references: [id])
+
+  @@unique([messageId, userId])
+  @@index([messageId])
+  @@map("message_mentions")
+}
+
+// =========================================
+// Attachment Object — https://docs.discord.com/developers/resources/message#attachment-object
+// =========================================
+model MessageAttachment {
+  id String @id // snowflake
+
+  messageId String  @map("message_id")
+  message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  filename      String
+  title         String?
+  description   String?
+  contentType   String? @map("content_type")
+  size          Int
+  url           String
+  proxyUrl      String  @map("proxy_url")
+  height        Int?
+  width         Int?
+  ephemeral     Boolean? @default(false)
+  durationSecs  Float?   @map("duration_secs")
+  waveform      String?
+  flags         Int?
+
+  @@index([messageId])
+  @@map("message_attachments")
+}
+
+// =========================================
+// Embed Object — https://docs.discord.com/developers/resources/message#embed-object
+// =========================================
+model MessageEmbed {
+  id String @id @default(uuid())
+
+  messageId String  @map("message_id")
+  message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  title       String?
+  type        String? // always "rich" for webhook embeds
+  description String?
+  url         String?
+  timestamp   DateTime?
+  color       Int?
+  flags       Int?
+
+  footer    MessageEmbedFooter?
+  image     MessageEmbedMedia?  @relation("EmbedImage")
+  thumbnail MessageEmbedMedia?  @relation("EmbedThumbnail")
+  video     MessageEmbedMedia?  @relation("EmbedVideo")
+  provider  MessageEmbedProvider?
+  author    MessageEmbedAuthor?
+  fields    MessageEmbedField[]
+
+  @@index([messageId])
+  @@map("message_embeds")
+}
+
+model MessageEmbedFooter {
+  id           String       @id @default(uuid())
+  text         String
+  iconUrl      String?      @map("icon_url")
+  proxyIconUrl String?      @map("proxy_icon_url")
+
+  embedId String       @unique @map("embed_id")
+  embed   MessageEmbed @relation(fields: [embedId], references: [id], onDelete: Cascade)
+
+  @@map("message_embed_footers")
+}
+
+// Shared shape for image/thumbnail/video — Discord defines image & video
+// separately but they're structurally identical aside from a couple fields,
+// so this single model covers all three via the relation name.
+model MessageEmbedMedia {
+  id                 String  @id @default(uuid())
+  url                String?
+  proxyUrl           String? @map("proxy_url")
+  height             Int?
+  width              Int?
+  contentType        String? @map("content_type")
+  placeholder        String?
+  placeholderVersion Int?    @map("placeholder_version")
+  description        String?
+  flags              Int?
+
+  embedAsImageId     String? @unique @map("embed_as_image_id")
+  embedAsImage       MessageEmbed? @relation("EmbedImage", fields: [embedAsImageId], references: [id], onDelete: Cascade)
+
+  embedAsThumbnailId String? @unique @map("embed_as_thumbnail_id")
+  embedAsThumbnail   MessageEmbed? @relation("EmbedThumbnail", fields: [embedAsThumbnailId], references: [id], onDelete: Cascade)
+
+  embedAsVideoId     String? @unique @map("embed_as_video_id")
+  embedAsVideo       MessageEmbed? @relation("EmbedVideo", fields: [embedAsVideoId], references: [id], onDelete: Cascade)
+
+  @@map("message_embed_media")
+}
+
+model MessageEmbedProvider {
+  id   String  @id @default(uuid())
+  name String?
+  url  String?
+
+  embedId String       @unique @map("embed_id")
+  embed   MessageEmbed @relation(fields: [embedId], references: [id], onDelete: Cascade)
+
+  @@map("message_embed_providers")
+}
+
+model MessageEmbedAuthor {
+  id           String  @id @default(uuid())
+  name         String
+  url          String?
+  iconUrl      String? @map("icon_url")
+  proxyIconUrl String? @map("proxy_icon_url")
+
+  embedId String       @unique @map("embed_id")
+  embed   MessageEmbed @relation(fields: [embedId], references: [id], onDelete: Cascade)
+
+  @@map("message_embed_authors")
+}
+
+model MessageEmbedField {
+  id     String  @id @default(uuid())
+  name   String
+  value  String
+  inline Boolean? @default(false)
+
+  embedId String       @map("embed_id")
+  embed   MessageEmbed @relation(fields: [embedId], references: [id], onDelete: Cascade)
+
+  @@index([embedId])
+  @@map("message_embed_fields")
+}
+
+// =========================================
+// Reaction Object — https://docs.discord.com/developers/resources/message#reaction-object
+// =========================================
+model MessageReaction {
+  id String @id @default(uuid())
+
+  messageId String  @map("message_id")
+  message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  count        Int
+  countBurst   Int     @default(0) @map("count_burst")
+  countNormal  Int     @default(0) @map("count_normal")
+  me           Boolean @default(false)
+  meBurst      Boolean @default(false) @map("me_burst")
+
+  emojiId   String? @map("emoji_id")
+  emojiName String? @map("emoji_name")
+
+  burstColors String[] @map("burst_colors")
+
+  @@unique([messageId, emojiId, emojiName])
+  @@index([messageId])
+  @@map("message_reactions")
+}
+
+// =========================================
+// Message Reference Object — https://docs.discord.com/developers/resources/message#message-reference-object
+// =========================================
+model MessageReference {
+  id String @id @default(uuid())
+
+  messageId String  @unique @map("message_id")
+  message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  type              Int     @default(0) // 0 = DEFAULT, 1 = FORWARD
+  referencedMessageId String? @map("referenced_message_id")
+  channelId         String? @map("channel_id")
+  guildId           String? @map("guild_id")
+  failIfNotExists   Boolean? @default(true) @map("fail_if_not_exists")
+
+  @@map("message_references")
 }
